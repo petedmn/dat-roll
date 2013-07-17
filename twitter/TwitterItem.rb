@@ -28,6 +28,13 @@ class TwitterItem
 		@user_agent = user_agent
 	end
 
+	#method to automatically evaluate the various fields e.g. num tweets, following,followers
+	def parse
+		get_num_tweets
+		get_num_following
+		get_num_followers
+	end
+
 	def get_num_tweets
 		if @number_of_tweets == nil then
 			number_of_tweets_node_set = @content.xpath("(//*[@data-element-term='tweet_stats'])[1]")

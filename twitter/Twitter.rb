@@ -51,6 +51,7 @@ class GoogleTwitterScraper
 			name = url.text().to_s.tap{|s| s.slice!("https://twitter.com/")}
 			scraper = TwitterScraper.new(url)
 			twitter_item = scraper.scrape
+			twitter_item.parse #make sure all mandatory fields are evaluated first
 			#puts twitter_item.get_num_tweets
 			#puts twitter_item.get_num_followers
 			#puts twitter_item.get_num_following
