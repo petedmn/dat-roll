@@ -11,6 +11,7 @@ require './Tweet'
 require './UserAgent'
 require './RequestHandler'
 require './String'
+require './XmlWriter'
 
 #a Twitter Item takes a twitter page as an xml document
 #and turns it into structured, useful data.
@@ -163,43 +164,10 @@ class TwitterItem
 		return @tweets
 	end
 
-	#writes the useful data we have found to a well structured text file
+	#write the current twitter item to a file! (writes the whole thing at present! Should move to changed-based)
 	def write_to_file(file_name, directory_name)
-		begin
-			Dir::mkdir(directory_name)
-		rescue Exception=> e
-		end
-
-		file = File.open(directory_name+"/"+file_name,"w")
-		xml = construct_xml
-		file.write(xml)		
-		file.close
-	end
-
-	def construct_xml
-		puts 'building xml'
-		builder = Nokogiri::XML::Builder.new do |xml|
-		xml.profile {
-			xml.key_values{ 
-				xml.number_followers_ @number_followers
-				xml.number_tweets_ @number_of_tweets
-				xml.number_following_ @number_following
-			}
-			xml.tweets{
-				@tweets.each do |t|
-					if t.is_a? Tweet
-					xml.tweet(:tweet_id => t.get_id){						
-        				xml.tweet_content_  t.get_content
-        				xml.retweet_count_     t.get_retweet_count
-        				xml.favourite_count_ t.get_favourite_count
-
-        		}	
-        		end
-			end
-			}				
-		}
-		end	
-		return builder.to_xml		
+		writer = XmlWriter.new(this,file_name, directory_name)
+		writer.write_to_file
 	end	
 
 	#write the 
