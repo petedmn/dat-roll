@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<profile>
+  <key_values>
+    <number_followers/>
+    <number_tweets/>
+    <number_following/>
+  </key_values>
+  <tweets>
+    <tweet tweet_id="356788657509777409">
+      <tweet_content>En el PP no son nada racistas, de hecho lo cobran todo en negro.</tweet_content>
+      <retweet_count>5</retweet_count>
+      <favourite_count>6</favourite_count>
+    </tweet>
+    <tweet tweet_id="356715509779140608">
+      <tweet_content>VIRGO. Debes luchar por lo que quieres y no permitir que nadie se apropie de lo que te pertenece.</tweet_content>
+      <retweet_count>664</retweet_count>
+      <favourite_count>69</favourite_count>
+    </tweet>
+    <tweet tweet_id="356499821823131650">
+      <tweet_content>"Si tienes entre las cejas libertad, no te vayas a dormir que a&#xFA;n es de d&#xED;a" Jueves a las 20h en G&#xE9;nova. Que salga el Sol.</tweet_content>
+      <retweet_count>35</retweet_count>
+      <favourite_count>8</favourite_count>
+    </tweet>
+  </tweets>
+</profile>

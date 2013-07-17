@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<profile>
+  <key_values>
+    <number_followers/>
+    <number_tweets/>
+    <number_following/>
+  </key_values>
+  <tweets>
+    <tweet tweet_id="355712299048247296">
+      <tweet_content>Just heard that Carl Fearns has pulled out a  special.</tweet_content>
+      <retweet_count>5</retweet_count>
+      <favourite_count>2</favourite_count>
+    </tweet>
+    <tweet tweet_id="353542530211659776">
+      <tweet_content>Sushi for obvious health reasons but if my Samoan instincts took over  all day  &#x201C;:  Sushi or KFC?&#x201D;</tweet_content>
+      <retweet_count>13</retweet_count>
+      <favourite_count>22</favourite_count>
+    </tweet>
+    <tweet tweet_id="352299892451975168">
+      <tweet_content>Obviously totally gutted at being left out for deciding Test but all efforts go into preparing the boys to see it through.</tweet_content>
+      <retweet_count>5,606</retweet_count>
+      <favourite_count>3,037</favourite_count>
+    </tweet>
+    <tweet tweet_id="352308434189819906">
+      <tweet_content>Major test of  concept coming - win &amp;amp; they're B/Irish &amp;amp; credible. Lose &amp;amp; they're Welsh &amp;amp; haven't won since 1997. Brutal</tweet_content>
+      <retweet_count>21</retweet_count>
+      <favourite_count>2</favourite_count>
+    </tweet>
+  </tweets>
+</profile>

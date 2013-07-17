@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<profile>
+  <key_values>
+    <number_followers/>
+    <number_tweets/>
+    <number_following/>
+  </key_values>
+  <tweets>
+    <tweet tweet_id="250052645044236289">
+      <tweet_content>Lmao!!! Knew I had seen this look before!!</tweet_content>
+      <retweet_count>55</retweet_count>
+      <favourite_count>80</favourite_count>
+    </tweet>
+    <tweet tweet_id="249655663066763264">
+      <tweet_content>Stop cheating man..   @PiriWeepu1049</tweet_content>
+      <retweet_count>14</retweet_count>
+      <favourite_count>21</favourite_count>
+    </tweet>
+    <tweet tweet_id="249657680619241474">
+      <tweet_content>This what happens when your losing the game!    Swearing lol  @</tweet_content>
+      <retweet_count>8</retweet_count>
+      <favourite_count>18</favourite_count>
+    </tweet>
+    <tweet tweet_id="249631978834505728">
+      <tweet_content>The bus to the hotel!! Lol sitting in the wrong seats aahhhhhh</tweet_content>
+      <retweet_count>13</retweet_count>
+      <favourite_count>13</favourite_count>
+    </tweet>
+  </tweets>
+</profile>
