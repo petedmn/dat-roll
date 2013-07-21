@@ -11,7 +11,7 @@ require './Tweet'
 require './UserAgent'
 require './RequestHandler'
 require './String'
-require './XmlWriter'
+
 
 #a Twitter Item takes a twitter page as an xml document
 #and turns it into structured, useful data.
@@ -112,7 +112,6 @@ class TwitterItem
 			#puts retweet_count
 			#to get tweet stats, need to make another async request to twitter
 			url = "https://twitter.com/i/expanded/batch/"+tweet.get_id+"?facepile_max=7&include%5B%5D=social_proof&include%5B%5D=ancestors&include%5B%5D=descendants"
-			$logger.info(url)
 			request = RequestHandler.new(url,@user_agent)
 			response = request.make_request
 
@@ -149,7 +148,7 @@ class TwitterItem
 
  		container_node_set.xpath("html/body/li").each do |t|
  			tweet = Tweet.new
- 			tweet = parse_tweet_content(tweet,t)
+ 			tweet.parse_tweet_content(t)
  			@tweets << tweet
  		end		
 		return @has_more
@@ -166,9 +165,46 @@ class TwitterItem
 
 	#write the current twitter item to a file! (writes the whole thing at present! Should move to changed-based)
 	def write_to_file(file_name, directory_name)
-		writer = XmlWriter.new(this,file_name, directory_name)
-		writer.write_to_file
+		begin
+			Dir::mkdir(directory_name)
+		rescue Exception=> e
+		end
+		puts directory_name+"/"+file_name
+		file = File.open(directory_name+"/"+file_name,"w")
+		xml = construct_xml
+		file.write(xml)		
+		file.close
+
+		puts "writing to file"
+		#writer = XmlWriter.new(this,file_name, directory_name)
+		#writer.write_to_file
 	end	
+
+	def construct_xml
+		puts 'building xml'		
+		builder = Nokogiri::XML::Builder.new do |xml|
+		xml.profile {
+			xml.key_values{ 
+				xml.number_followers_ @number_followers
+				xml.number_tweets_ @number_of_tweets
+				xml.number_following_ @number_following
+			}
+			xml.tweets{
+				@tweets.each do |t|
+					if t.is_a? Tweet
+					xml.tweet(:tweet_id => t.get_id){						
+        				xml.tweet_content_  t.get_content
+        				xml.retweet_count_     t.get_retweet_count
+        				xml.favourite_count_ t.get_favourite_count
+
+        		}	
+        		end
+			end
+			}				
+		}
+		end	
+		return builder.to_xml
+	end
 
 	#write the 
 	def write_to_file_response(file_name,directory_name)

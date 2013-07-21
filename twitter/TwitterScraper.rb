@@ -34,16 +34,17 @@ class TwitterScraper
 	def scrape
 	begin
 		@document = fetch_page
-		twitterItem = TwitterItem.new(@document,@resp,@url,@name,@userAgent)	
+		twitterItem = TwitterItem.new(@document,@resp,@url,@name,@userAgent)
 		tweets = twitterItem.fetch_tweets	
 		@has_more = true
 		while @has_more == true and @count < 500
 			puts @count
 			@count = @count + 1
 			@has_more = fetch_more_tweets(twitterItem,tweets)
-			sleep(20) #we should wait between requests or else shit gets bad	
+			#sleep(20) #we should wait between requests or else shit gets bad	
 		end	
 	rescue Exception => e
+		puts e
 		twitterItem.write_to_file(@name,"fails")
 	end
 		return twitterItem

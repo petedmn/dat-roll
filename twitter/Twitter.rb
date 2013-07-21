@@ -48,6 +48,7 @@ class GoogleTwitterScraper
 
 	def scrape_url_list(url_list)
 		url_list.each do |url|
+			begin
 			name = url.text().to_s.tap{|s| s.slice!("https://twitter.com/")}
 			scraper = TwitterScraper.new(url)
 			twitter_item = scraper.scrape
@@ -58,6 +59,12 @@ class GoogleTwitterScraper
 			twitter_item.fetch_tweets
 			twitter_item.write_to_file(name+".xml",@run_file_name)
 			sleep(20)
+			#various exceptions can be thrown here due invalid urls/private twitter accounts
+			#that we can't touch. If an exception is recieved back here we just ignore it :)
+			rescue Exception => e
+				#log the exception
+				$logger.info(e)
+			end
 		end
 	end
 
