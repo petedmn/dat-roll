@@ -106,6 +106,10 @@ class TwitterItem
 
 	def fetch_retweet_favourites(tweet, t)
 		begin
+			tweet.fetch_retweet_favourites(t)
+			return tweet
+			###BELOW CODE IS NO LONGER USED
+			puts "FETCHING RETWEETS, WRONG PLACE"
 			#sleep(4)#as I do not want to get blocked
 			var = "//*[@id='stream-item-tweet="+tweet.get_id+"']/ol/li[1]/div/div/div[3]/div/div[4]/ul/li[1]/a/strong/text()"
 			retweet_count = t.xpath(var)
@@ -124,12 +128,20 @@ class TwitterItem
 			#puts "favourited:" + favourites
 			tweet.set_favourite_count(favourites.strip)
 
+				#date_time
+			date_time_val = response.string_between_markers("tweet-timestamp","\\u003E").strip
+			puts "DATE TIME VAL;"+date_time_val
+			date_time_val = date_time_val.chomp("\\")
+			tweet.set_date_time(date_time_val)
+							
+
 			file = File.open("lol.html","w")
 			file.write(response)
 			file.close
-		return tweet
+			###END CODE NO LONGER USED
 	rescue Exception => e
-		$logger.info(e)
+#		$logger.info(e)
+		puts e
 	end
 	end
 

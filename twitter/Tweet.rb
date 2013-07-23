@@ -1,3 +1,6 @@
+require './String'
+require './LogWriter'
+
 #class to help with storage of individual tweet objects
 class Tweet
 	def initialize()
@@ -35,29 +38,32 @@ class Tweet
 	#fetch the retweets and favorites for the tweet
 	def fetch_retweet_favourites(t)
 		begin
-			#sleep(4)#as I do not want to get blocked
-			var = "//*[@id='stream-item-tweet="+tweet.get_id+"']/ol/li[1]/div/div/div[3]/div/div[4]/ul/li[1]/a/strong/text()"
-			retweet_count = t.xpath(var)
-			#puts retweet_count
 			#to get tweet stats, need to make another async request to twitter
-			url = "https://twitter.com/i/expanded/batch/"+tweet.get_id+"?facepile_max=7&include%5B%5D=social_proof&include%5B%5D=ancestors&include%5B%5D=descendants"
+			url = "https://twitter.com/i/expanded/batch/"+get_id+"?facepile_max=7&include%5B%5D=social_proof&include%5B%5D=ancestors&include%5B%5D=descendants"
 			request = RequestHandler.new(url,@user_agent)
 			response = request.make_request
 
-			#find retweets
+			LogWriter.debug("\n\n====================")
+
 			retweets = response.string_between_markers(" Retweeted ", " times")
+			LogWriter.debug("retweets:"+retweets)
+
 			set_retweet_count(retweets.strip)
-			#puts "retweeted:"+retweets
-			#find favourites
+			
 			favourites = response.string_between_markers(" Favorited ", " times")
-			#puts "favourited:" + favourites
+			LogWriter.debug("favourites:"+favourites)
+			
 			set_favourite_count(favourites.strip)
 
-			file = File.open("lol.html","w")
-			file.write(response)
-			file.close
+			#date_time				
+			date_time_val = response.string_between_markers("tweet-timestamp","\\u003E").strip
+			date_time_val = date_time_val.string_between_markers("js-permalink js-nav\\\" title=\\\"","\\\"")
+			date_time_val = date_time_val.chomp("\\")
+			set_date_time(date_time_val)		
+			LogWriter.debug("date_time:"+date_time_val)	
 	rescue Exception => e
-		#$logger.info(e)
+		#puts e
+		LogWriter.error(e)
 	end
 	end
 

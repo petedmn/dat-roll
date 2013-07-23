@@ -12,6 +12,7 @@ require './Tweet'
 require './UserAgent'
 require './RequestHandler'
 require './String'
+require './LogWriter'
 
 class GoogleTwitterScraper	
 
@@ -73,13 +74,13 @@ class GoogleTwitterScraper
 		#puts "fetching account urls for" + name
 		links = []
 		
-		$logger.info "#{Time.now}: INFO start download"		
+		LogWriter.info "#{Time.now}: INFO start download"		
 		resp = RestClient.get(@google_remote_base_url + name)
-		$logger.info "#{Time.now}: INFO end download"
+		LogWriter.info "#{Time.now}: INFO end download"
 		doc = Nokogiri::HTML(resp)
 
 		(1..11).each do |i|
-			xpath = '/html/body/div[2]/div/ol/li['+ (i.to_s)+']/div/a/@href' #this is the url to the person's twitter profile		
+			xpath = '/html/body/div[2]/div/ol/li['+ (i.to_s)+']/div/a/@href' #this is the url to the person's twitter profile(magic)
    			link_to_investigate = (doc.xpath(xpath))
    			links[i-1] = link_to_investigate
    			#puts links[i-1]
@@ -90,7 +91,8 @@ end
 
 class CommandLineInterface
 	def initialize
-		$logger = Logger.new('logger.log')
+		LogWriter.new		
+		LogWriter.info("this is a test")
 	end
 		
 	def start(filename,run_dir_name)

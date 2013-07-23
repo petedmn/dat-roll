@@ -12,6 +12,7 @@ require './Tweet'
 require './UserAgent'
 require './RequestHandler'
 require './String'
+require './LogWriter'
 
 #the twitter scraper will be passed a page, and scrape it.
 #handles twitter-specific networking issues such as infinite scroll
@@ -44,7 +45,7 @@ class TwitterScraper
 			#sleep(20) #we should wait between requests or else shit gets bad	
 		end	
 	rescue Exception => e
-		puts e
+		LogWriter.error(e)
 		twitterItem.write_to_file(@name,"fails")
 	end
 		return twitterItem

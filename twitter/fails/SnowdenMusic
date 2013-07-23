@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<profile>
+  <key_values>
+    <number_followers/>
+    <number_tweets/>
+    <number_following/>
+  </key_values>
+  <tweets>
+    <tweet tweet_id="352116306230784001">
+      <tweet_content>So what's it like to share your name with the most wanted man in the world, ?</tweet_content>
+      <retweet_count>4</retweet_count>
+      <favourite_count>3</favourite_count>
+    </tweet>
+    <tweet tweet_id="349667478982508545">
+      <tweet_content>You MIGHT think that Snowden is in Ecuador.... this is false.
+TOMORROW NIGHT:  w/  at GS!</tweet_content>
+      <retweet_count>2</retweet_count>
+      <favourite_count>3</favourite_count>
+    </tweet>
+    <tweet tweet_id="348669571969974272">
+      <tweet_content>I know you're on teh tour and all, but we miss your tweeterings</tweet_content>
+      <retweet_count>3</retweet_count>
+      <favourite_count>2</favourite_count>
+    </tweet>
+    <tweet tweet_id="348608564039925761">
+      <tweet_content>Tonight's venue in Minneapolis is so much cooler than the usual club setting. Wish all shows were like this</tweet_content>
+      <retweet_count>2</retweet_count>
+      <favourite_count>5</favourite_count>
+    </tweet>
+  </tweets>
+</profile>
