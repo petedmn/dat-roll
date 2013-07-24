@@ -30,8 +30,8 @@ class Tweet
 
 		
 	rescue Exception => e
-		#logger.info(e)
-		return this
+		LogWriter.error(e)
+		return self
 	end
 	end
 	
