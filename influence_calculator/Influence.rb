@@ -1,4 +1,5 @@
 require 'nokogiri'
+require './LogWriter'
 
 ##script to calculate an influence value, given a xml input
 
@@ -30,6 +31,7 @@ class TwitterInfluence
 		file = File.open(file_name,"r")
 		@file_content = file.read
 		file.close
+		@name = file_name.chomp(".xml")
 	end
 
 	def calculate
@@ -38,9 +40,19 @@ class TwitterInfluence
 		retweets = parse_tweets(xml)
 		puts "number of tweets:"+retweets.size.to_s
 		h_index = get_h_index(retweets)
+		num_followers = get_num_followers(xml).to_s
 		puts "H INDEX;"+h_index.to_s
-		puts "BUT NUMBER OF FOLLOWERS;"+get_num_followers(xml).to_s
+		puts "BUT NUMBER OF FOLLOWERS;"+num_followers
 		#the h-index is the point at which the number of papers = the number of citations... 		
+		save_results(h_index.to_s,num_followers.to_s,@name.to_s)
+	end
+
+	def save_results(h_index, num_followers, name)
+		LogWriter.data("Name;"+name)
+		LogWriter.data("H-INDEX;"+h_index)
+		LogWriter.data("Number of followers;"+num_followers)
+			
+		
 	end
 
 	#go through the retweet array, to the point at which the number of papers = the number of retweets
