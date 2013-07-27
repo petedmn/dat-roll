@@ -42,6 +42,22 @@ class LogWriter
 		@performance_log.debug(message)
 	end
 
+	#using for tweet parse time logging
+	def self.parse_performance(message)
+		if @parse_performance_log == nil
+			@parse_performance_log = Logger.new('log/parse_performance.log')
+		end
+		@parse_performance_log.debug(message)
+	end
+
+	#using for fetch time logging
+	def self.fetch_performance(message)
+		if @fetch_performance_log == nil
+			@fetch_performance_log = Logger.new('log/fetch_performance.log')
+		end
+		@fetch_performance_log.debug(message)
+	end
+
 	#using for reliability logging
 	def self.failure_log(message,run=nil,name=nil)
 		if @fail_log == nil
