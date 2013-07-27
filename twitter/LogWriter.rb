@@ -18,6 +18,7 @@ class LogWriter
 		@error_log.error(message)
 	end
 
+
 	#use for debugging
 	def self.debug(message)
 		if@test_log == nil
