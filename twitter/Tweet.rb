@@ -45,14 +45,23 @@ class Tweet
 			LogWriter.debug("\n\n====================")
 
 			retweets = response.string_between_markers(" Retweeted ", " times")
-			LogWriter.debug("retweets:"+retweets)
-
-			set_retweet_count(retweets.strip)
+			if retweets != nil
+				LogWriter.debug("retweets:"+retweets)
+				set_retweet_count(retweets.strip)
+			else
+				LogWriter.debug("retweets: UNKNOWN")
+				set_retweet_count("0")
+			end					
 			
 			favourites = response.string_between_markers(" Favorited ", " times")
-			LogWriter.debug("favourites:"+favourites)
-			
-			set_favourite_count(favourites.strip)
+
+			if favourites != nil
+				LogWriter.debug("favourites:"+favourites)
+				set_favourite_count(favourites.strip)
+			else
+				LogWriter.debug("favourites: UNKNOWN")
+				set_favourite_count("0")
+			end		
 
 			#get the date time values
 			fetch_date_time(response)
@@ -70,8 +79,12 @@ class Tweet
 		#date_time				
 		date_time_val = response.string_between_markers("tweet-timestamp","\\u003E").strip
 		date_time_val = date_time_val.string_between_markers("js-permalink js-nav\\\" title=\\\"","\\\"")
-		set_date_time(date_time_val)		
-		LogWriter.debug("date_time:"+date_time_val)	
+		if date_time_val != nil and date_time_val.to_s != ""
+			set_date_time(date_time_val)		
+			LogWriter.debug("date_time:"+date_time_val)	
+		else			
+			LogWriter.debug("date_time: UNKNOWN")
+		end
 	rescue Exception => e
 		LogWriter.error("DATE TIME PARSING EXCEPTION"+e.to_s)
 	end
