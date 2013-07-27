@@ -65,12 +65,9 @@ class GoogleTwitterScraper
 			end_time = Time.now
 			LogWriter.performance("Twitter profile;"+name+"scraped SUCCESFUL")
 			total_time = end_time - start_time
-			LogWriter.performance("Time taken:"total_time)
+			LogWriter.performance("Time taken:"+total_time)
 			
 			twitter_item.parse #make sure all mandatory fields are evaluated first
-			#puts twitter_item.get_num_tweets
-			#puts twitter_item.get_num_followers
-			#puts twitter_item.get_num_following
 			twitter_item.fetch_tweets
 			twitter_item.write_to_file(name+".xml",@run_file_name)
 			#get here = sucess
@@ -80,7 +77,7 @@ class GoogleTwitterScraper
 			#can at the high level check why the run failed.
 			rescue Exception => e
 				#log the exception
-				$logger.info(e)
+				LogWriter.error(e)
 				LogWriter.failure_log(e,url,name)#log the failure!
 			end
 		end
