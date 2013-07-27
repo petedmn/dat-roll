@@ -64,7 +64,9 @@ class GoogleTwitterScraper
 			twitter_item = scraper.scrape
 			end_time = Time.now
 			LogWriter.performance("Twitter profile;"+name+"scraped SUCCESFUL")
-			total_time = end_time - start_time
+			LogWriter.performance("Number of tweets fetched;"+twitter_item.num_fetched)
+			total_time = (end_time - start_time)
+			total_time = total_time.to_s
 			LogWriter.performance("Time taken:"+total_time)
 			
 			twitter_item.parse #make sure all mandatory fields are evaluated first
@@ -72,11 +74,13 @@ class GoogleTwitterScraper
 			twitter_item.write_to_file(name+".xml",@run_file_name)
 			#get here = sucess
 			sleep(20)
+
 			#various exceptions can be thrown here due invalid urls/private twitter accounts
 			#that we can't touch. The exception should really reach  back to here, so that we
 			#can at the high level check why the run failed.
 			rescue Exception => e
 				#log the exception
+				puts e
 				LogWriter.error(e)
 				LogWriter.failure_log(e,url,name)#log the failure!
 			end

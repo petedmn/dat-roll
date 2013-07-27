@@ -142,6 +142,7 @@ class TwitterItem
 	rescue Exception => e
 	
 		puts e
+		throw e
 	end
 	end
 
@@ -230,6 +231,12 @@ class TwitterItem
 		file = File.open(directory_name+"/"+file_name,"w")
 		file.write(@raw.to_s)
 		file.close
+	end
+
+	#return the number of tweets fetched so far for this twitter item
+	#this is returned as a string.. as it is currently only used for logging purposes!
+	def num_fetched
+		return @tweets.size.to_s
 	end
 
 end

@@ -46,6 +46,7 @@ class TwitterScraper
 	rescue Exception => e
 		LogWriter.error(e)
 		twitterItem.write_to_file(@name,"fails")
+		throw e# we still want to throw the exception at this level!
 	end
 		return twitterItem
 	end
