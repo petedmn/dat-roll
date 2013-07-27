@@ -79,7 +79,8 @@ class GoogleTwitterScraper
 		LogWriter.info "#{Time.now}: INFO end download"
 		doc = Nokogiri::HTML(resp)
 
-		(1..11).each do |i|
+		(1..1).each do |i|
+		#(1..11).each do |i|
 			xpath = '/html/body/div[2]/div/ol/li['+ (i.to_s)+']/div/a/@href' #this is the url to the person's twitter profile(magic)
    			link_to_investigate = (doc.xpath(xpath))
    			links[i-1] = link_to_investigate
@@ -106,6 +107,20 @@ end
 
 cli = CommandLineInterface.new
 cli.set_proxy
+
+#sanity checking
+if ARGV[0] == nil
+	puts "Error - please enter a file to load names from"
+	puts "Usage - ruby Twitter.rb NAME_FILE_LOCATION RESULTS_DIRECTORY_LOCATION"
+	exit
+end
+
+if ARGV[1] == nil
+	puts "Error - please enter a directory to save results to"
+	puts "Usage - ruby Twitter.rb NAME_FILE_LOCATION RESULTS_DIRECTORY_LOCATION"
+	exit
+end
+
 if ARGV[0]
 	filename = ARGV[0]
 	run_file_name = ARGV[1]
