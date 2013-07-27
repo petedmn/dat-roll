@@ -51,6 +51,14 @@ class LogWriter
 		@parse_performance_log.debug(message)
 	end
 
+	#used for data storage performance logging
+	def self.storage_performance(message)
+		if @storage_performance_log == nil
+			@storage_performance_log = Logger.new('log/storage_performance.log')
+		end
+		@storage_performance_log.debug(message)
+	end
+
 	#using for fetch time logging
 	def self.fetch_performance(message)
 		if @fetch_performance_log == nil

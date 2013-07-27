@@ -85,6 +85,8 @@ class TwitterItem
 	#parse the content of a tweet and container node t, saving this to the given
 	#tweet object
 	def parse_tweet_content (tweet, t)
+		start_time = Time.now
+		LogWriter.debug("Parsing tweet.. START")
 		begin
 		tweet_id = t.xpath("@data-item-id").text().to_s.strip
 		@max_tweet_id = tweet_id
@@ -97,11 +99,14 @@ class TwitterItem
 		#fetching retweets and favourites gets complicated
 		tweet = fetch_retweet_favourites(tweet,t)	
 
-		return tweet
 	rescue Exception => e
 		logger.info(e)
-		return tweet
 	end
+		end_time = Time.now
+		time_taken = (end_time - start_time).to_s
+		LogWriter.debug("Parsing tweet.. END SUCCESFUL")
+		LogWriter.parse_performance("Time taken to parse tweet;"+time_taken)
+		return tweet
 	end	
 
 	def fetch_retweet_favourites(tweet, t)
@@ -179,7 +184,10 @@ class TwitterItem
 	end
 
 	#write the current twitter item to a file! (writes the whole thing at present! Should move to changed-based)
+	#TODO moved to change based file storage, might be slower overall though?
 	def write_to_file(file_name, directory_name)
+		LogWriter.debug("START write to file...")
+		start_time = Time.now
 		begin
 			Dir::mkdir(directory_name)
 		rescue Exception=> e
@@ -188,11 +196,11 @@ class TwitterItem
 		file = File.open(directory_name+"/"+file_name,"w")
 		xml = construct_xml
 		file.write(xml)		
-		file.close
-
-		puts "writing to file"
-		#writer = XmlWriter.new(this,file_name, directory_name)
-		#writer.write_to_file
+		file.close		
+		end_time = Time.now
+		time_taken = (end_time - start_time).to_s
+		LogWriter.debug("Write to file finished SUCCESFUL")
+		LogWriter.storage_performance("Time taken;"+time_taken)
 	end	
 
 	def construct_xml
