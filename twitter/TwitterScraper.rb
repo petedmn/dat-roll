@@ -1,7 +1,6 @@
 require "open-uri"
 require "rest-client"
 require "crack"
-#require "hpricot"
 require "nokogiri"
 require "uri"
 require 'openssl'
@@ -42,7 +41,7 @@ class TwitterScraper
 			puts @count
 			@count = @count + 1
 			@has_more = fetch_more_tweets(twitterItem,tweets)
-			#sleep(20) #we should wait between requests or else shit gets bad	
+			sleep(5) #we should wait between requests or else shit gets bad	
 		end	
 	rescue Exception => e
 		LogWriter.error(e)
@@ -67,7 +66,7 @@ class TwitterScraper
 	#given twitter item, and its tweet set. Returns true if there are more tweets to
 	#fetch
 	def fetch_more_tweets(twitterItem,tweets)
-		
+		LogWriter.test("Time taken to fetch extra tweets...START")
 		###
 		#make the async request to get more data
 		###
@@ -78,13 +77,15 @@ class TwitterScraper
 		#puts "max ID" + max_tweet_id.to_s
 		request_url =URI.escape((base_request_url+profile_name+remainder+(max_tweet_id.to_s)).to_s)		
 		response = fetch_page(request_url)
-		
+		LogWriter.test("Time taken to fetch extra tweets...END")
 
 		#puts "fetching more tweets"+request_url		
 
 		json = Crack::JSON.parse(response)	
 
+		#the twitter item then parses this response
 		@has_more = twitterItem.fetch_extra_tweets(json)
+		
 		return @has_more
 	end
 

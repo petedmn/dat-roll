@@ -1,0 +1,166 @@
+# Logfile created on 2013-07-27 14:57:27 +1200 by logger.rb/31641
+D, [2013-07-27T14:57:27.640736 #28404] DEBUG -- : Time taken to fetch extra tweets...START
+D, [2013-07-27T14:57:28.721869 #28404] DEBUG -- : Time taken to fetch extra tweets...END
+D, [2013-07-27T15:01:09.729006 #28683] DEBUG -- : Time taken to fetch extra tweets...START
+D, [2013-07-27T15:01:10.810928 #28683] DEBUG -- : Time taken to fetch extra tweets...END
+D, [2013-07-27T15:01:10.842442 #28683] DEBUG -- : parsing extra tweets.. START
+D, [2013-07-27T15:01:36.254532 #28683] DEBUG -- : parsing extra tweets.. END
+D, [2013-07-27T15:01:41.254973 #28683] DEBUG -- : Time taken to fetch extra tweets...START
+D, [2013-07-27T15:01:42.560514 #28683] DEBUG -- : Time taken to fetch extra tweets...END
+D, [2013-07-27T15:01:42.599170 #28683] DEBUG -- : parsing extra tweets.. START
+D, [2013-07-27T15:02:08.047689 #28683] DEBUG -- : parsing extra tweets.. END
+D, [2013-07-27T15:02:13.047894 #28683] DEBUG -- : Time taken to fetch extra tweets...START
+D, [2013-07-27T15:02:14.211307 #28683] DEBUG -- : Time taken to fetch extra tweets...END
+D, [2013-07-27T15:02:14.248722 #28683] DEBUG -- : parsing extra tweets.. START
+D, [2013-07-27T15:07:32.927136 #28944] DEBUG -- : Time taken to fetch extra tweets...START
+D, [2013-07-27T15:07:33.993742 #28944] DEBUG -- : Time taken to fetch extra tweets...END
+D, [2013-07-27T15:07:34.030178 #28944] DEBUG -- : parsing extra tweets.. START
+D, [2013-07-27T15:09:50.886056 #29054] DEBUG -- : Time taken to fetch extra tweets...START
+D, [2013-07-27T15:09:52.246749 #29054] DEBUG -- : Time taken to fetch extra tweets...END
+D, [2013-07-27T15:09:52.285571 #29054] DEBUG -- : parsing extra tweets.. START
+D, [2013-07-27T15:10:21.205041 #29054] DEBUG -- : parsing extra tweets.. END
+D, [2013-07-27T15:10:26.205504 #29054] DEBUG -- : Time taken to fetch extra tweets...START
+D, [2013-07-27T15:10:27.691433 #29054] DEBUG -- : Time taken to fetch extra tweets...END
+D, [2013-07-27T15:10:27.729103 #29054] DEBUG -- : parsing extra tweets.. START
+D, [2013-07-27T15:10:55.007982 #29054] DEBUG -- : parsing extra tweets.. END
+D, [2013-07-27T15:11:00.008374 #29054] DEBUG -- : Time taken to fetch extra tweets...START
+D, [2013-07-27T15:11:01.455195 #29054] DEBUG -- : Time taken to fetch extra tweets...END
+D, [2013-07-27T15:11:01.484648 #29054] DEBUG -- : parsing extra tweets.. START
+D, [2013-07-27T15:11:32.188629 #29054] DEBUG -- : parsing extra tweets.. END
+D, [2013-07-27T15:11:37.189051 #29054] DEBUG -- : Time taken to fetch extra tweets...START
+D, [2013-07-27T15:11:38.595827 #29054] DEBUG -- : Time taken to fetch extra tweets...END
+D, [2013-07-27T15:11:38.635950 #29054] DEBUG -- : parsing extra tweets.. START
+D, [2013-07-27T15:12:06.702521 #29054] DEBUG -- : parsing extra tweets.. END
+D, [2013-07-27T15:12:11.702905 #29054] DEBUG -- : Time taken to fetch extra tweets...START
+D, [2013-07-27T15:12:13.087095 #29054] DEBUG -- : Time taken to fetch extra tweets...END
+D, [2013-07-27T15:12:13.127431 #29054] DEBUG -- : parsing extra tweets.. START
+D, [2013-07-27T15:12:42.139664 #29054] DEBUG -- : parsing extra tweets.. END
+D, [2013-07-27T15:12:47.140129 #29054] DEBUG -- : Time taken to fetch extra tweets...START
+D, [2013-07-27T15:12:48.869982 #29054] DEBUG -- : Time taken to fetch extra tweets...END
+D, [2013-07-27T15:12:48.908159 #29054] DEBUG -- : parsing extra tweets.. START
+D, [2013-07-27T15:13:16.941762 #29054] DEBUG -- : parsing extra tweets.. END
+D, [2013-07-27T15:13:21.942198 #29054] DEBUG -- : Time taken to fetch extra tweets...START
+D, [2013-07-27T15:13:23.381988 #29054] DEBUG -- : Time taken to fetch extra tweets...END
+D, [2013-07-27T15:13:23.420577 #29054] DEBUG -- : parsing extra tweets.. START
+D, [2013-07-27T15:13:50.634882 #29054] DEBUG -- : parsing extra tweets.. END
+D, [2013-07-27T15:13:55.635322 #29054] DEBUG -- : Time taken to fetch extra tweets...START
+D, [2013-07-27T15:13:56.746931 #29054] DEBUG -- : Time taken to fetch extra tweets...END
+D, [2013-07-27T15:13:56.787030 #29054] DEBUG -- : parsing extra tweets.. START
+D, [2013-07-27T15:14:22.930188 #29054] DEBUG -- : parsing extra tweets.. END
+D, [2013-07-27T15:14:27.930625 #29054] DEBUG -- : Time taken to fetch extra tweets...START
+D, [2013-07-27T15:14:29.341590 #29054] DEBUG -- : Time taken to fetch extra tweets...END
+D, [2013-07-27T15:14:29.379155 #29054] DEBUG -- : parsing extra tweets.. START
+D, [2013-07-27T15:14:59.992185 #29054] DEBUG -- : parsing extra tweets.. END
+D, [2013-07-27T15:15:04.992648 #29054] DEBUG -- : Time taken to fetch extra tweets...START
+D, [2013-07-27T15:15:06.098114 #29054] DEBUG -- : Time taken to fetch extra tweets...END
+D, [2013-07-27T15:15:06.136932 #29054] DEBUG -- : parsing extra tweets.. START
+D, [2013-07-27T15:15:34.902472 #29054] DEBUG -- : parsing extra tweets.. END
+D, [2013-07-27T15:15:39.902904 #29054] DEBUG -- : Time taken to fetch extra tweets...START
+D, [2013-07-27T15:15:41.606209 #29054] DEBUG -- : Time taken to fetch extra tweets...END
+D, [2013-07-27T15:15:41.646780 #29054] DEBUG -- : parsing extra tweets.. START
+D, [2013-07-27T15:16:10.696118 #29054] DEBUG -- : parsing extra tweets.. END
+D, [2013-07-27T15:16:15.696564 #29054] DEBUG -- : Time taken to fetch extra tweets...START
+D, [2013-07-27T15:16:16.797931 #29054] DEBUG -- : Time taken to fetch extra tweets...END
+D, [2013-07-27T15:16:16.838095 #29054] DEBUG -- : parsing extra tweets.. START
+D, [2013-07-27T15:17:04.997775 #29478] DEBUG -- : Time taken to fetch extra tweets...START
+D, [2013-07-27T15:17:06.197146 #29478] DEBUG -- : Time taken to fetch extra tweets...END
+D, [2013-07-27T15:17:06.238730 #29478] DEBUG -- : parsing extra tweets.. START
+D, [2013-07-27T15:17:32.147399 #29478] DEBUG -- : parsing extra tweets.. END
+D, [2013-07-27T15:17:37.147824 #29478] DEBUG -- : Time taken to fetch extra tweets...START
+D, [2013-07-27T15:17:38.237282 #29478] DEBUG -- : Time taken to fetch extra tweets...END
+D, [2013-07-27T15:17:38.270580 #29478] DEBUG -- : parsing extra tweets.. START
+D, [2013-07-27T15:18:51.849261 #29558] DEBUG -- : Time taken to fetch extra tweets...START
+D, [2013-07-27T15:18:52.936452 #29558] DEBUG -- : Time taken to fetch extra tweets...END
+D, [2013-07-27T15:18:52.975809 #29558] DEBUG -- : parsing extra tweets.. START
+D, [2013-07-27T15:19:19.741390 #29558] DEBUG -- : parsing extra tweets.. END
+D, [2013-07-27T15:19:24.741750 #29558] DEBUG -- : Time taken to fetch extra tweets...START
+D, [2013-07-27T15:19:25.854815 #29558] DEBUG -- : Time taken to fetch extra tweets...END
+D, [2013-07-27T15:19:25.889065 #29558] DEBUG -- : parsing extra tweets.. START
+D, [2013-07-27T15:19:51.313487 #29558] DEBUG -- : parsing extra tweets.. END
+D, [2013-07-27T15:19:56.313878 #29558] DEBUG -- : Time taken to fetch extra tweets...START
+D, [2013-07-27T15:19:57.411392 #29558] DEBUG -- : Time taken to fetch extra tweets...END
+D, [2013-07-27T15:19:57.450900 #29558] DEBUG -- : parsing extra tweets.. START
+D, [2013-07-27T15:20:22.527905 #29558] DEBUG -- : parsing extra tweets.. END
+D, [2013-07-27T15:20:27.528347 #29558] DEBUG -- : Time taken to fetch extra tweets...START
+D, [2013-07-27T15:20:28.600930 #29558] DEBUG -- : Time taken to fetch extra tweets...END
+D, [2013-07-27T15:20:28.638646 #29558] DEBUG -- : parsing extra tweets.. START
+D, [2013-07-27T15:20:53.689884 #29558] DEBUG -- : parsing extra tweets.. END
+D, [2013-07-27T15:20:58.690324 #29558] DEBUG -- : Time taken to fetch extra tweets...START
+D, [2013-07-27T15:20:59.779822 #29558] DEBUG -- : Time taken to fetch extra tweets...END
+D, [2013-07-27T15:20:59.822456 #29558] DEBUG -- : parsing extra tweets.. START
+D, [2013-07-27T15:21:24.641795 #29558] DEBUG -- : parsing extra tweets.. END
+D, [2013-07-27T15:21:29.642245 #29558] DEBUG -- : Time taken to fetch extra tweets...START
+D, [2013-07-27T15:21:30.735888 #29558] DEBUG -- : Time taken to fetch extra tweets...END
+D, [2013-07-27T15:21:30.776297 #29558] DEBUG -- : parsing extra tweets.. START
+D, [2013-07-27T15:21:59.913854 #29558] DEBUG -- : parsing extra tweets.. END
+D, [2013-07-27T15:22:04.914162 #29558] DEBUG -- : Time taken to fetch extra tweets...START
+D, [2013-07-27T15:22:06.281440 #29558] DEBUG -- : Time taken to fetch extra tweets...END
+D, [2013-07-27T15:22:06.316389 #29558] DEBUG -- : parsing extra tweets.. START
+D, [2013-07-27T15:22:35.706614 #29558] DEBUG -- : parsing extra tweets.. END
+D, [2013-07-27T15:22:40.707001 #29558] DEBUG -- : Time taken to fetch extra tweets...START
+D, [2013-07-27T15:22:41.838728 #29558] DEBUG -- : Time taken to fetch extra tweets...END
+D, [2013-07-27T15:22:41.876961 #29558] DEBUG -- : parsing extra tweets.. START
+D, [2013-07-27T15:23:11.046608 #29558] DEBUG -- : parsing extra tweets.. END
+D, [2013-07-27T15:23:16.047094 #29558] DEBUG -- : Time taken to fetch extra tweets...START
+D, [2013-07-27T15:23:17.408799 #29558] DEBUG -- : Time taken to fetch extra tweets...END
+D, [2013-07-27T15:23:17.450450 #29558] DEBUG -- : parsing extra tweets.. START
+D, [2013-07-27T15:23:46.391997 #29558] DEBUG -- : parsing extra tweets.. END
+D, [2013-07-27T15:23:51.392434 #29558] DEBUG -- : Time taken to fetch extra tweets...START
+D, [2013-07-27T15:23:52.753299 #29558] DEBUG -- : Time taken to fetch extra tweets...END
+D, [2013-07-27T15:23:52.780533 #29558] DEBUG -- : parsing extra tweets.. START
+D, [2013-07-27T15:24:21.000715 #29558] DEBUG -- : parsing extra tweets.. END
+D, [2013-07-27T15:24:26.001146 #29558] DEBUG -- : Time taken to fetch extra tweets...START
+D, [2013-07-27T15:24:27.648603 #29558] DEBUG -- : Time taken to fetch extra tweets...END
+D, [2013-07-27T15:24:27.688384 #29558] DEBUG -- : parsing extra tweets.. START
+D, [2013-07-27T15:24:53.852435 #29558] DEBUG -- : parsing extra tweets.. END
+D, [2013-07-27T15:24:58.852840 #29558] DEBUG -- : Time taken to fetch extra tweets...START
+D, [2013-07-27T15:24:59.951102 #29558] DEBUG -- : Time taken to fetch extra tweets...END
+D, [2013-07-27T15:24:59.988523 #29558] DEBUG -- : parsing extra tweets.. START
+D, [2013-07-27T15:25:28.087382 #29558] DEBUG -- : parsing extra tweets.. END
+D, [2013-07-27T15:25:33.087606 #29558] DEBUG -- : Time taken to fetch extra tweets...START
+D, [2013-07-27T15:25:34.201589 #29558] DEBUG -- : Time taken to fetch extra tweets...END
+D, [2013-07-27T15:25:34.241049 #29558] DEBUG -- : parsing extra tweets.. START
+D, [2013-07-27T15:26:02.814384 #29558] DEBUG -- : parsing extra tweets.. END
+D, [2013-07-27T15:28:52.838146 #30004] DEBUG -- : Time taken to fetch extra tweets...START
+D, [2013-07-27T15:28:53.920457 #30004] DEBUG -- : Time taken to fetch extra tweets...END
+D, [2013-07-27T15:28:53.958174 #30004] DEBUG -- : parsing extra tweets.. START
+D, [2013-07-27T15:29:20.018086 #30004] DEBUG -- : parsing extra tweets.. END
+D, [2013-07-27T15:29:25.018542 #30004] DEBUG -- : Time taken to fetch extra tweets...START
+D, [2013-07-27T15:29:26.161009 #30004] DEBUG -- : Time taken to fetch extra tweets...END
+D, [2013-07-27T15:29:26.199203 #30004] DEBUG -- : parsing extra tweets.. START
+D, [2013-07-27T15:38:03.844115 #30379] DEBUG -- : Time taken to fetch extra tweets...START
+D, [2013-07-27T15:38:05.236403 #30379] DEBUG -- : Time taken to fetch extra tweets...END
+D, [2013-07-27T15:38:05.278281 #30379] DEBUG -- : parsing extra tweets.. START
+D, [2013-07-27T15:40:16.733020 #30448] DEBUG -- : Time taken to fetch extra tweets...START
+D, [2013-07-27T15:40:17.854865 #30448] DEBUG -- : Time taken to fetch extra tweets...END
+D, [2013-07-27T15:40:17.895278 #30448] DEBUG -- : parsing extra tweets.. START
+D, [2013-07-27T15:40:43.906285 #30448] DEBUG -- : parsing extra tweets.. END
+D, [2013-07-27T15:40:48.906722 #30448] DEBUG -- : Time taken to fetch extra tweets...START
+D, [2013-07-27T15:40:50.016937 #30448] DEBUG -- : Time taken to fetch extra tweets...END
+D, [2013-07-27T15:40:50.052362 #30448] DEBUG -- : parsing extra tweets.. START
+D, [2013-07-27T15:41:28.786540 #30512] DEBUG -- : Time taken to fetch extra tweets...START
+D, [2013-07-27T15:41:29.888754 #30512] DEBUG -- : Time taken to fetch extra tweets...END
+D, [2013-07-27T15:41:29.926959 #30512] DEBUG -- : parsing extra tweets.. START
+D, [2013-07-27T15:41:59.190304 #30512] DEBUG -- : parsing extra tweets.. END
+D, [2013-07-27T15:42:04.190749 #30512] DEBUG -- : Time taken to fetch extra tweets...START
+D, [2013-07-27T15:42:05.319996 #30512] DEBUG -- : Time taken to fetch extra tweets...END
+D, [2013-07-27T15:42:05.358026 #30512] DEBUG -- : parsing extra tweets.. START
+D, [2013-07-27T15:42:34.370357 #30512] DEBUG -- : parsing extra tweets.. END
+D, [2013-07-27T15:42:39.370801 #30512] DEBUG -- : Time taken to fetch extra tweets...START
+D, [2013-07-27T15:42:40.470398 #30512] DEBUG -- : Time taken to fetch extra tweets...END
+D, [2013-07-27T15:42:40.508513 #30512] DEBUG -- : parsing extra tweets.. START
+D, [2013-07-27T15:44:10.859868 #30619] DEBUG -- : Time taken to fetch extra tweets...START
+D, [2013-07-27T15:44:12.303933 #30619] DEBUG -- : Time taken to fetch extra tweets...END
+D, [2013-07-27T15:44:12.340636 #30619] DEBUG -- : parsing extra tweets.. START
+D, [2013-07-27T15:44:41.882787 #30619] DEBUG -- : parsing extra tweets.. END
+D, [2013-07-27T15:44:46.883272 #30619] DEBUG -- : Time taken to fetch extra tweets...START
+D, [2013-07-27T15:44:48.169780 #30619] DEBUG -- : Time taken to fetch extra tweets...END
+D, [2013-07-27T15:44:48.208323 #30619] DEBUG -- : parsing extra tweets.. START
+D, [2013-07-27T15:45:14.021725 #30619] DEBUG -- : parsing extra tweets.. END
+D, [2013-07-27T15:45:45.575849 #30677] DEBUG -- : Time taken to fetch extra tweets...START
+D, [2013-07-27T15:45:46.665448 #30677] DEBUG -- : Time taken to fetch extra tweets...END
+D, [2013-07-27T15:45:46.705049 #30677] DEBUG -- : parsing extra tweets.. START
+D, [2013-07-27T15:46:14.636671 #30677] DEBUG -- : parsing extra tweets.. END
+D, [2013-07-27T15:46:19.637110 #30677] DEBUG -- : Time taken to fetch extra tweets...START
+D, [2013-07-27T15:46:21.328038 #30677] DEBUG -- : Time taken to fetch extra tweets...END
+D, [2013-07-27T15:46:21.368163 #30677] DEBUG -- : parsing extra tweets.. START

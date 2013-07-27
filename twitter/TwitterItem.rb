@@ -140,7 +140,7 @@ class TwitterItem
 			file.close
 			###END CODE NO LONGER USED
 	rescue Exception => e
-#		$logger.info(e)
+	
 		puts e
 	end
 	end
@@ -148,6 +148,7 @@ class TwitterItem
 	#tweet parser for the JSON response for infinite scrolling.
 	#add these tweets to the tweet array for the page we are parsing
 	def	fetch_extra_tweets(json)
+		LogWriter.test("parsing extra tweets.. START")
 		#we have a hash of values to deal with....
 		#puts "parsing the extra tweets"	
 		#puts json["max_id"]
@@ -163,6 +164,7 @@ class TwitterItem
  			tweet.parse_tweet_content(t)
  			@tweets << tweet
  		end		
+	  LogWriter.test("parsing extra tweets.. END")
 		return @has_more
 	end
 

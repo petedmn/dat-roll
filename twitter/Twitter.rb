@@ -47,24 +47,41 @@ class GoogleTwitterScraper
 		 end		 
 	end
 
+	###
+	#This is the main method for looping through a twitter account!
+	#this is where the calling starts and finishes!
+	###
 	def scrape_url_list(url_list)
 		url_list.each do |url|
 			begin
 			name = url.text().to_s.tap{|s| s.slice!("https://twitter.com/")}
 			scraper = TwitterScraper.new(url)
+
+			#Scrape the profile
+			LogWriter.performance("Twitter profile;"+name+"entire scraping..BEGIN")
+			#current time..
+			start_time = Time.now
 			twitter_item = scraper.scrape
+			end_time = Time.now
+			LogWriter.performance("Twitter profile;"+name+"scraped SUCCESFUL")
+			total_time = end_time - start_time
+			LogWriter.performance("Time taken:"total_time)
+			
 			twitter_item.parse #make sure all mandatory fields are evaluated first
 			#puts twitter_item.get_num_tweets
 			#puts twitter_item.get_num_followers
 			#puts twitter_item.get_num_following
 			twitter_item.fetch_tweets
 			twitter_item.write_to_file(name+".xml",@run_file_name)
+			#get here = sucess
 			sleep(20)
 			#various exceptions can be thrown here due invalid urls/private twitter accounts
-			#that we can't touch. If an exception is recieved back here we just ignore it :)
+			#that we can't touch. The exception should really reach  back to here, so that we
+			#can at the high level check why the run failed.
 			rescue Exception => e
 				#log the exception
 				$logger.info(e)
+				LogWriter.failure_log(e,url,name)#log the failure!
 			end
 		end
 	end
