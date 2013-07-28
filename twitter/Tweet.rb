@@ -73,10 +73,9 @@ class Tweet
 	end
 
 	#fetch the date and time values for the tweet
-	#TODO - this often breaks due inconsistent response format
+	#TODO - this often breaks due inconsistent response format!!
 	def fetch_date_time(response)
-	begin
-		#date_time				
+	begin			
 		date_time_val = response.string_between_markers("tweet-timestamp","\\u003E").strip
 		date_time_val = date_time_val.string_between_markers("js-permalink js-nav\\\" title=\\\"","\\\"")
 		if date_time_val != nil and date_time_val.to_s != ""
@@ -86,7 +85,7 @@ class Tweet
 			LogWriter.debug("date_time: UNKNOWN")
 		end
 	rescue Exception => e
-		LogWriter.error("DATE TIME PARSING EXCEPTION"+e.to_s)
+		LogWriter.error("DATE TIME PARSING EXCEPTION"+e.to_s)#given that this often breaks, it is better to throw this more specific error message
 	end
 	end
 	
