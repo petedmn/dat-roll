@@ -27,8 +27,9 @@ require './LogWriter'
 #PROPOSED H - INDEX
 
 class TwitterInfluence
-	def initialize(dir_name)
+	def initialize(dir_name,results_file_name=nil)
 		@dir_name = dir_name		
+		@results_file_name = results_file_name
 	end
 
 	def main
@@ -51,8 +52,32 @@ class TwitterInfluence
 		puts "H INDEX;"+h_index.to_s
 		puts "BUT NUMBER OF FOLLOWERS;"+num_followers
 		#the h-index is the point at which the number of papers = the number of citations... 		
-		save_results(h_index.to_s,num_followers.to_s,@name.to_s,num_tweets,retweets.size.to_s)
+		if @results_file_name != nil
+			save_xml_results(@results_file_name,h_index.to_s,num_followers.to_s,@name.to_s,num_tweets,retweets.size.to_s)
+		end
 	end
+
+	def save_xml_results(file_name,h_index, num_followers, name,num_tweets,num_recorded_tweets)
+			puts "SAVING RESULTS"
+			results = get_xml_string(h_index, num_followers, name,num_tweets,num_recorded_tweets)
+			file = File.open(file_name,"a")
+			file.write(results)
+			file.close
+	end
+
+	def get_xml_string(h_index, num_followers, name,num_tweets,num_recorded_tweets)
+					builder = Nokogiri::XML::Builder.new do |xml|
+				xml.profile{
+					xml.h_index_ h_index
+					xml.num_followers_ num_followers
+					xml.name_ name
+					xml.num_tweets_ num_tweets
+					xml.num_recorded_tweets_ num_recorded_tweets
+				}
+			end
+		return builder.to_xml
+	end
+
 
 	def save_results(h_index, num_followers, name,num_tweets=nil,num_recorded_tweets=nil)
 		LogWriter.data("Name;"+name)
@@ -124,10 +149,15 @@ end
 
 #usage - loop through a directory of results, calculating influence data for each xml file in this directory
 
-if ARGV[0]
+if ARGV[0] and ARGV[1]
+	dirname = ARGV[0]
+		results_file_name = ARGV[1]	
+	influence = TwitterInfluence.new(dirname,results_file_name)
+	influence.main
+elsif ARGV[0]
 	dirname = ARGV[0]
 	influence = TwitterInfluence.new(dirname)
-	influence.main
+	influence.main	
 else
 	return "Need argument - directory name"
 end
