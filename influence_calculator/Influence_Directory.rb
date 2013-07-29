@@ -34,6 +34,7 @@ class TwitterInfluence
 	def main
 		Dir.foreach(@dir_name) do |item|
 			next if item == '.' or item == '..'
+			@name = item
 			#do work on real items
 			calculate(item)				
 		end
@@ -46,18 +47,21 @@ class TwitterInfluence
 		puts "number of tweets:"+retweets.size.to_s
 		h_index = get_h_index(retweets)
 		num_followers = get_num_followers(xml).to_s
+		num_tweets = get_num_tweets(xml).to_s
 		puts "H INDEX;"+h_index.to_s
 		puts "BUT NUMBER OF FOLLOWERS;"+num_followers
 		#the h-index is the point at which the number of papers = the number of citations... 		
-		save_results(h_index.to_s,num_followers.to_s,@name.to_s)
+		save_results(h_index.to_s,num_followers.to_s,@name.to_s,num_tweets,retweets.size.to_s)
 	end
 
-	def save_results(h_index, num_followers, name)
+	def save_results(h_index, num_followers, name,num_tweets=nil,num_recorded_tweets=nil)
 		LogWriter.data("Name;"+name)
-		LogWriter.data("H-INDEX;"+h_index)
+		LogWriter.data("H-INDEX;"+h_index)	
 		LogWriter.data("Number of followers;"+num_followers)
-			
-		
+		if num_tweets != nil
+			LogWriter.data("Num tweets;"+num_tweets)
+			LogWriter.data("Number of recorded tweets;"+num_recorded_tweets)
+		end	
 	end
 
 	#go through the retweet array, to the point at which the number of papers = the number of retweets
@@ -100,6 +104,13 @@ class TwitterInfluence
 		xml.xpath("//number_followers").each do |node|
 			followers = node.text().chomp("Followers").strip
 			return followers.chomp("Followers").strip
+		end
+	end
+
+	def get_num_tweets(xml)
+	xml.xpath("//number_tweets").each do |node|
+			num_tweets = node.text().chomp("Tweets").strip
+			return num_tweets.chomp("Tweets").strip
 		end
 	end
 
