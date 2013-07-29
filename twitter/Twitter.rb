@@ -40,11 +40,18 @@ class GoogleTwitterScraper
 
 	def start_scrape
 		 @name_list.each do |name|
+			name = truncate_name(name)
 			url_list = fetch_twitter_account_url(name)
 			scrape_url_list(url_list)
 			#pause 30 seconds between scraping requests.
 			sleep(30)
 		 end		 
+	end
+
+	def truncate_name(name)
+		s = name
+		n = 1
+		trunc = s[/(\S+\s+){#{n}}/].strip
 	end
 
 	###
