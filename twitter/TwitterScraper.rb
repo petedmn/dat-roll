@@ -52,16 +52,30 @@ class TwitterScraper
 	end
 
 	#this is used to fetch pages. 
-	def fetch_page(url=nil)
-		if url == nil
+	def fetch_page	
 			@resp = RestClient.get(@url,:user_agent => @userAgent.get_user_agent.to_s)
 			@document = Nokogiri::HTML(@resp)
 			return @document
-		else
-			resp = RestClient.get(url,:user_agent => @userAgent.get_user_agent.to_s)
-			return resp
-		end
 	end
+
+	#fetch page for the given url
+	#503 errors are being thrown from here currently. May be due to detection of same user agent. 
+	#If exception thrown, get a new user agent, wait a bit, then try again.
+	def fetch_page(url,failed_prev=false)
+			begin
+				resp = RestClient.get(url,:user_agent => @userAgent.get_user_agent.to_s)
+				return resp
+			rescue Exception => e
+				if failed_prev
+					throw e
+				end
+				#exception thrown trying to fetch the resource... Try again with a different user agent.
+					@userAgent = UserAgent.new
+					sleeps(20) #token gesture - wait a little bit, see if the issue is solved.
+					fetch_page(url,true)
+			end
+	end
+
 
 	#fetch more tweets will load more tweets based on the 
 	#given twitter item, and its tweet set. Returns true if there are more tweets to
