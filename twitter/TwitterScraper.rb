@@ -1,3 +1,4 @@
+require 'json'
 require "open-uri"
 require "rest-client"
 require "crack"
@@ -106,16 +107,16 @@ class TwitterScraper
 		begin
 			json = Crack::JSON.parse(response)	
 		rescue Crack::ParseError => e
-			puts response
-			LogWriter.debug(response)
+			#puts response
+			LogWriter.info(response)
 			#the response is being difficult/malformed JSON response
 			return	manual_parse_response(response)
 		end
 	end
 
-	def manual_parse_response(response)
-		puts "manual parsing of response"
+	 #sometimes the crack library does not work well enough for my needs
+	def manual_parse_response(response)		
+		json = JSON.load(response)
 	end
-
 end
 
