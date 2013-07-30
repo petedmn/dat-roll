@@ -33,7 +33,7 @@ class TwitterScraper
 	#infinite scrolling problem
 	def scrape
 	begin
-		@document = fetch_page
+		@document = fetch_base_page
 		twitterItem = TwitterItem.new(@document,@resp,@url,@name,@userAgent)
 		tweets = twitterItem.fetch_tweets	
 		@has_more = true
@@ -78,7 +78,7 @@ class TwitterScraper
 	end
 
 	#this is used to fetch pages. 
-	def fetch_page	
+	def fetch_base_page	
 			@resp = RestClient.get(@url,:user_agent => @userAgent.get_user_agent.to_s)
 			@document = Nokogiri::HTML(@resp)
 			return @document
