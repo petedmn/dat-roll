@@ -81,13 +81,27 @@ class TwitterScraper
 		LogWriter.test("Time taken to fetch extra tweets...END")
 
 		#puts "fetching more tweets"+request_url		
-
-		json = Crack::JSON.parse(response)	
+		json = parse_response(response)
 
 		#the twitter item then parses this response
 		@has_more = twitterItem.fetch_extra_tweets(json)
 		
 		return @has_more
+	end
+
+	def parse_response(response)
+		begin
+			json = Crack::JSON.parse(response)	
+		rescue Crack::ParseError => e
+			puts response
+			LogWriter.debug(response)
+			#the response is being difficult/malformed JSON response
+			return	manual_parse_response(response)
+		end
+	end
+
+	def manual_parse_response(response)
+		puts "manual parsing of response"
 	end
 
 end
