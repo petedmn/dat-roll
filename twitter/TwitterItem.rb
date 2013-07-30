@@ -219,7 +219,7 @@ class TwitterItem
         				xml.tweet_content_  t.get_content
         				xml.retweet_count_     t.get_retweet_count
         				xml.favourite_count_ t.get_favourite_count
-
+					xml.date_time_ t.get_date_time
         		}	
         		end
 			end

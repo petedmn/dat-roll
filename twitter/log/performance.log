@@ -259,3 +259,51 @@ D, [2013-07-30T09:04:40.292855 #17264] DEBUG -- : Twitter profile;PamelaDAnderso
 D, [2013-07-30T09:04:40.293205 #17264] DEBUG -- : Number of tweets fetched;3060
 D, [2013-07-30T09:04:40.293306 #17264] DEBUG -- : Time taken:5223.628135294
 D, [2013-07-30T09:05:58.019154 #17264] DEBUG -- : Twitter profile;MarthaStewartentire scraping..BEGIN
+D, [2013-07-30T10:08:02.813562 #17264] DEBUG -- : Twitter profile;DebraMessingentire scraping..BEGIN
+D, [2013-07-30T10:13:49.109052 #17264] DEBUG -- : Twitter profile;amandabynesentire scraping..BEGIN
+D, [2013-07-30T10:18:17.094080 #17264] DEBUG -- : Twitter profile;stephanieprattentire scraping..BEGIN
+D, [2013-07-30T10:22:02.324692 #17264] DEBUG -- : Twitter profile;carolynporcoentire scraping..BEGIN
+D, [2013-07-30T11:22:25.815772 #17264] DEBUG -- : Twitter profile;MC3Christineentire scraping..BEGIN
+D, [2013-07-30T11:49:21.278218 #17264] DEBUG -- : Twitter profile;MARIEMTVentire scraping..BEGIN
+D, [2013-07-30T11:50:22.506920 #17264] DEBUG -- : Twitter profile;JanetJacksonentire scraping..BEGIN
+D, [2013-07-30T12:11:27.987608 #17264] DEBUG -- : Twitter profile;JanetJacksonscraped SUCCESFUL
+D, [2013-07-30T12:11:27.987940 #17264] DEBUG -- : Number of tweets fetched;699
+D, [2013-07-30T12:11:27.988046 #17264] DEBUG -- : Time taken:1265.480436428
+D, [2013-07-30T12:12:47.198899 #17264] DEBUG -- : Twitter profile;clmgiudicientire scraping..BEGIN
+D, [2013-07-30T12:13:45.143247 #17264] DEBUG -- : Twitter profile;alka_seltzer666entire scraping..BEGIN
+D, [2013-07-30T12:14:46.032033 #17264] DEBUG -- : Twitter profile;AnnCurryentire scraping..BEGIN
+D, [2013-07-30T12:16:25.505096 #17264] DEBUG -- : Twitter profile;jOYCEBONELLientire scraping..BEGIN
+D, [2013-07-30T12:17:25.373175 #17264] DEBUG -- : Twitter profile;HackneyAbbottentire scraping..BEGIN
+D, [2013-07-30T12:40:21.373923 #22471] DEBUG -- : Twitter profile;YourAnonNewsentire scraping..BEGIN
+D, [2013-07-30T12:54:55.849193 #23085] DEBUG -- : Twitter profile;CynthiaBailey10entire scraping..BEGIN
+D, [2013-07-30T12:55:14.789361 #23107] DEBUG -- : Twitter profile;CynthiaBailey10entire scraping..BEGIN
+D, [2013-07-30T12:55:45.324295 #23107] DEBUG -- : Twitter profile;Cmdr_Hadfieldentire scraping..BEGIN
+D, [2013-07-30T12:59:58.078881 #23279] DEBUG -- : Twitter profile;CynthiaBailey10entire scraping..BEGIN
+D, [2013-07-30T13:02:50.818524 #23418] DEBUG -- : Twitter profile;CynthiaBailey10entire scraping..BEGIN
+D, [2013-07-30T13:31:38.164021 #17264] DEBUG -- : Twitter profile;aliceentire scraping..BEGIN
+D, [2013-07-30T13:33:57.578016 #24756] DEBUG -- : Twitter profile;CynthiaBailey10entire scraping..BEGIN
+D, [2013-07-30T13:34:51.737070 #24779] DEBUG -- : Twitter profile;CynthiaBailey10entire scraping..BEGIN
+D, [2013-07-30T13:35:51.089060 #24779] DEBUG -- : Twitter profile;Cmdr_Hadfieldentire scraping..BEGIN
+D, [2013-07-30T13:56:45.479900 #26102] DEBUG -- : Twitter profile;CynthiaBailey10entire scraping..BEGIN
+D, [2013-07-30T14:00:42.118428 #26268] DEBUG -- : Twitter profile;therealmarymaryentire scraping..BEGIN
+D, [2013-07-30T14:04:49.752466 #26440] DEBUG -- : Twitter profile;justinbieberentire scraping..BEGIN
+D, [2013-07-30T14:21:03.976717 #22471] DEBUG -- : Twitter profile;YourAnonNewsscraped SUCCESFUL
+D, [2013-07-30T14:21:03.977057 #22471] DEBUG -- : Number of tweets fetched;3175
+D, [2013-07-30T14:21:03.977159 #22471] DEBUG -- : Time taken:6042.602684191
+D, [2013-07-30T14:22:27.975041 #22471] DEBUG -- : Twitter profile;Cmdr_Hadfieldentire scraping..BEGIN
+D, [2013-07-30T15:42:08.855645 #26268] DEBUG -- : Twitter profile;therealmarymaryscraped SUCCESFUL
+D, [2013-07-30T15:42:08.855968 #26268] DEBUG -- : Number of tweets fetched;3218
+D, [2013-07-30T15:42:08.856067 #26268] DEBUG -- : Time taken:6086.737125557
+D, [2013-07-30T15:43:26.801724 #26268] DEBUG -- : Twitter profile;PatriciaHeatonentire scraping..BEGIN
+D, [2013-07-30T17:20:39.813931 #26268] DEBUG -- : Twitter profile;PatriciaHeatonscraped SUCCESFUL
+D, [2013-07-30T17:20:39.814295 #26268] DEBUG -- : Number of tweets fetched;3180
+D, [2013-07-30T17:20:39.814399 #26268] DEBUG -- : Time taken:5833.011887773
+D, [2013-07-30T17:21:58.901595 #26268] DEBUG -- : Twitter profile;Linda_Pizzutientire scraping..BEGIN
+D, [2013-07-30T18:03:33.161657 #26268] DEBUG -- : Twitter profile;Linda_Pizzutiscraped SUCCESFUL
+D, [2013-07-30T18:03:33.245125 #26268] DEBUG -- : Number of tweets fetched;1535
+D, [2013-07-30T18:03:33.245228 #26268] DEBUG -- : Time taken:2494.259738488
+D, [2013-07-30T18:04:51.482431 #26268] DEBUG -- : Twitter profile;BlawnDeeentire scraping..BEGIN
+D, [2013-07-30T19:35:03.954996 #26268] DEBUG -- : Twitter profile;BlawnDeescraped SUCCESFUL
+D, [2013-07-30T19:35:03.955342 #26268] DEBUG -- : Number of tweets fetched;3211
+D, [2013-07-30T19:35:03.955444 #26268] DEBUG -- : Time taken:5412.472206985
+D, [2013-07-30T19:36:19.277441 #26268] DEBUG -- : Twitter profile;Queen_UKentire scraping..BEGIN

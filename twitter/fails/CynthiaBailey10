@@ -6,6 +6,21 @@
     <number_following/>
   </key_values>
   <tweets>
+    <tweet tweet_id="361925269050757122">
+      <tweet_content/>
+      <retweet_count>2</retweet_count>
+      <favourite_count>0</favourite_count>
+    </tweet>
+    <tweet tweet_id="361924856696172544">
+      <tweet_content/>
+      <retweet_count>3</retweet_count>
+      <favourite_count>0</favourite_count>
+    </tweet>
+    <tweet tweet_id="361996497325264896">
+      <tweet_content>My girls Rock!!!</tweet_content>
+      <retweet_count>3</retweet_count>
+      <favourite_count>0</favourite_count>
+    </tweet>
     <tweet tweet_id="361731281207296001">
       <tweet_content>sister of  of RHOA            NEW Jewelry collection...Click Here:</tweet_content>
       <retweet_count>2</retweet_count>
@@ -18,8 +33,8 @@
     </tweet>
     <tweet tweet_id="361592047758606336">
       <tweet_content>I Dream Of Nene-The Wedding coming wit a bang &#x1F52B; Sept 17th @ 9pm only on BRAVO</tweet_content>
-      <retweet_count>105</retweet_count>
-      <favourite_count>94</favourite_count>
+      <retweet_count>108</retweet_count>
+      <favourite_count>97</favourite_count>
     </tweet>
     <tweet tweet_id="361545276185509888">
       <tweet_content>11pm RT:  Watch  hit show  Sunday 10pm feat   &amp;amp;</tweet_content>
@@ -90,21 +105,6 @@
       <tweet_content>&#x2026;</tweet_content>
       <retweet_count>0</retweet_count>
       <favourite_count>0</favourite_count>
-    </tweet>
-    <tweet tweet_id="360358512003526657">
-      <tweet_content>My eyes are always on the Lord , for he rescues me from the traps of my enemies. (Psalms 25:8, 15 NLT)</tweet_content>
-      <retweet_count>14</retweet_count>
-      <favourite_count>9</favourite_count>
-    </tweet>
-    <tweet tweet_id="360228831212232704">
-      <tweet_content>Thank u  for the beautiful flowers! Today is our 3 year wedding anniversary!</tweet_content>
-      <retweet_count>11</retweet_count>
-      <favourite_count>25</favourite_count>
-    </tweet>
-    <tweet tweet_id="360127916417359873">
-      <tweet_content>NEW Jewelry Collection..</tweet_content>
-      <retweet_count>2</retweet_count>
-      <favourite_count>2</favourite_count>
     </tweet>
   </tweets>
 </profile>
