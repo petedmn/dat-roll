@@ -38,17 +38,19 @@ class TimeAggregator
 				month = arr[arr.size-2] + arr[arr.size-1]
 				puts "MONTH VAL"+month
 				#the tweets list naturally goes back in time.
-				@tweets.each do |inner|
-					current_month_tweets = Array.new
+				current_month_tweets = Array.new
+				@tweets.each do |inner|					
 					if inner != tweet
 						inner_dt = inner.get_date_time.to_s
 						inner_arr = inner_dt.split
-						inner_month = inner_arr[inner_arr.size - 2] + inner_arr[inner_arr.size-1]
-						puts "INNER MONTH VAL"+ inner_month
-						if inner_month.strip == month.strip
-							#we have the same month
-							puts "MONTHS ARE THE SAME"
-							current_month_tweets << inner
+						if inner_arr[inner_arr.size - 2] != nil and inner_arr[inner_arr.size-1] != nil
+							inner_month = inner_arr[inner_arr.size - 2] + inner_arr[inner_arr.size-1]
+							puts "INNER MONTH VAL"+ inner_month
+							if inner_month.strip == month.strip
+								#we have the same month
+								puts "MONTHS ARE THE SAME"
+								current_month_tweets << inner
+							end
 						end
 					end
 				end
@@ -86,7 +88,8 @@ class TimeAggregator
 	def get_h_index(retweets)
 		i=0
 		retweets.each do |tweet|			
-			if i == tweet or i > tweet
+			count = tweet.strip.to_i
+			if i == count or i > count
 				return i
 			end
 			i = i + 1	
