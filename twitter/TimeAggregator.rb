@@ -27,51 +27,74 @@ class TimeAggregator
 		#load data from current month, then go back in time month by month.
 		#for each month, compute the 'impact factor' for that month.
 		#then compute that shit in a nice format that can be graphed, foo!
+		#this currently has O(n^2) complexity, would be nicer to reduce this.
 	def cluster_months
-		impact_factor_array = Array.new
-		@tweets.each do |tweet|
+		impact_factor_hash = Hash.new
+		overall_impact = compute_impact_factor(@tweets)
+		tweets = @tweets
+		tweets.each do |tweet|
 		tweet_date_time = tweet.get_date_time.to_s
 			if tweet_date_time != 'UNKNOWN' and tweet_date_time != nil and tweet_date_time!= ""			
 				puts tweet_date_time
 				arr = tweet_date_time.split
 				puts arr
 				month = arr[arr.size-2] + arr[arr.size-1]
-				puts "MONTH VAL"+month
 				#the tweets list naturally goes back in time.
 				current_month_tweets = Array.new
-				@tweets.each do |inner|					
+				tweets.each do |inner|					
 					if inner != tweet
 						inner_dt = inner.get_date_time.to_s
 						inner_arr = inner_dt.split
 						if inner_arr[inner_arr.size - 2] != nil and inner_arr[inner_arr.size-1] != nil
 							inner_month = inner_arr[inner_arr.size - 2] + inner_arr[inner_arr.size-1]
-							puts "INNER MONTH VAL"+ inner_month
 							if inner_month.strip == month.strip
-								#we have the same month
-								puts "MONTHS ARE THE SAME"
+								#we have the same month								
 								current_month_tweets << inner
 							end
 						end
 					end
-				end
+				end	
+				tweets.delete(tweet)
 				#ok have gathered all the tweets for the current month
-				impact_factor_array << compute_impact_factor(current_month_tweets)
+				#puts "MONTH"+month.to_s + " IMPACT "+compute_impact_factor(current_month_tweets).to_s
+				impact_factor_hash[month] = compute_impact_factor(current_month_tweets)
 			end
-			puts tweet.get_retweet_count
-			puts tweet.get_date_time
 		end
+		#now do some stuff with impact factor array
+		save_month impact_factor_hash overall_impact #save the array
+	end
+
+	#save our results!
+	def save_month(impact_factor_hash,overall_impact)
+		puts "Please input a file name which can be saved to"
+		file_name = STDIN.gets
+
+		file = File.open(file_name,"w")
+		builder = Nokogiri::XML::Builder.new do |xml|
+			xml.month_divide{
+			xml.overall_impact_ overall_impact
+			xml.months{
+			impact_factor_hash.each do |month,impact_factor|				
+					xml.month_ month
+					xml.impact_ impact_factor				
+			end
+		}
+	}
+		end
+		file.write(builder.to_xml)
+		file.close		
 	end
 
 	def cluster_days
-
+		puts "STUB"
 	end
 
 	def cluster_years
-
+		puts "STUB"
 	end
 
 	def output
-
+		puts "STUB"
 	end
 	
 	#compute impact factor for the current month
@@ -82,7 +105,7 @@ class TimeAggregator
 		end
 		retweets = retweets.sort
 		retweets = retweets.reverse
-		get_h_index(retweets)
+		return get_h_index(retweets)
 	end
 
 	def get_h_index(retweets)
