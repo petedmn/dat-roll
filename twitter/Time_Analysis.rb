@@ -29,10 +29,7 @@ class TimeAnalysis
 			t.set_favourite_count favs
 			t.set_date_time dt
 			@tweets << t
-		end
-		xml = construct_xml
-		file = File.open(file_name+"_dt.xml","w")
-		file.write(xml)
+		end	
 	end
 
 	def get_date_time(tweet_id,retweets,favs,content)
@@ -42,8 +39,14 @@ class TimeAnalysis
 		tweet.fetch_date_time(response)
 	end
 
-	def save(tweet)
-		
+	def save
+		xml = construct_xml
+		file = File.open(@file_name+"_dt.xml","w")
+		file.write(xml)
+	end
+
+	def get_tweets
+		return @tweets
 	end
 
 	def construct_xml
@@ -74,11 +77,11 @@ class TimeAnalysis
 
 end
 
-if ARGV[0]
-	file_name = ARGV[0]
-	RestClient.proxy = ENV['http_proxy']
-	time = TimeAnalysis.new(file_name)
-	time.execute
-else
- exit "please input a file to analyse time values for!"
-end
+#if ARGV[0]
+#	file_name = ARGV[0]
+#	RestClient.proxy = ENV['http_proxy']
+#	time = TimeAnalysis.new(file_name)
+#	time.execute
+#else
+# exit "please input a file to analyse time values for!"
+#end

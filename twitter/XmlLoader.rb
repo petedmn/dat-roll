@@ -6,6 +6,7 @@ require_relative './Tweet'
 
 class TweetLoader
 	def initialize(file_name)
+		puts "tweet loader.new"+file_name
 		@file = File.open(file_name)
 	end
 

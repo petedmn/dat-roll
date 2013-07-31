@@ -9,10 +9,12 @@ class TimeAggregator
 	def initialize(file_name)
 		@file_name = file_name
 		#load in the xml file to start with
+		load_xml
 	end
 
-	def load_xml
-		tweet_loader = TweetLoader.new(@file_name)
+	#get dat tweet loader to do its thing - by default from the file name field
+	def load_xml(file_name = @file_name)
+		tweet_loader = TweetLoader.new(file_name)
 		@tweets = tweet_loader.get_tweets
 	end
 
@@ -24,7 +26,10 @@ class TimeAggregator
 		#for each month, compute the 'impact factor' for that month.
 		#then graph that shit
 	def cluster_months
-		
+		@tweets.each do |tweet|
+			puts tweet.get_retweet_count
+			puts tweet.get_date_time
+		end
 	end
 
 	def cluster_days
@@ -50,17 +55,17 @@ class CommandLineInterface
 				puts "File Name?"
 				file_name = gets
 			end
-			analysis = TimeAnalysis.new(file_name)
-			@time_aggregator = TimeAggregator.new(analysis)
+			@analysis = TimeAnalysis.new(file_name)
+			@time_aggregator = TimeAggregator.new(file_name)
 			action = select_action		
 			process(action)
 	end
 
 	def select_action
 		puts "Action?"
-		puts "Options; days\n months\n years\n"
+		puts "Options; days\n months\n years\n time"
 		action = STDIN.gets.chomp
-		if action == 'days' or action == 'months' or action == 'years'or action == 'exit'
+		if action == 'days' or action == 'months' or action == 'years'or action == 'exit' or action == 'time'
 			return action
 		else
 			puts "invalid action;"+action
@@ -76,10 +81,15 @@ class CommandLineInterface
 			@time_aggregator.cluster_months
 		elsif action == 'years'
 			@time_aggregator.cluster_years
+		elsif action == 'time'
+			@analysis.execute
+			@analysis.save
 		elsif action == 'exit'
 			puts "good-bye"
 			exit 1
 		end
+		puts "done"
+		select_action
 	end
 
 	def get_file_name
