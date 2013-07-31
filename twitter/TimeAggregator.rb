@@ -14,7 +14,9 @@ class TimeAggregator
 
 	#get dat tweet loader to do its thing - by default from the file name field
 	def load_xml(file_name = @file_name)
+		puts "loading xml..."+file_name
 		tweet_loader = TweetLoader.new(file_name)
+		tweet_loader.load_tweets
 		@tweets = tweet_loader.get_tweets
 	end
 
@@ -26,16 +28,32 @@ class TimeAggregator
 		#for each month, compute the 'impact factor' for that month.
 		#then compute that shit in a nice format that can be graphed, foo!
 	def cluster_months
+		impact_factor_array = Array.new
 		@tweets.each do |tweet|
-			if tweet.get_date_time != 'UNKNOWN'
-				tweet_date_time = tweet.get_date_time.to_s
+		tweet_date_time = tweet.get_date_time.to_s
+			if tweet_date_time != 'UNKNOWN' and tweet_date_time != nil and tweet_date_time!= ""			
+				puts tweet_date_time
 				arr = tweet_date_time.split
+				puts arr
 				month = arr[arr.size-2] + arr[arr.size-1]
 				puts "MONTH VAL"+month
 				#the tweets list naturally goes back in time.
 				@tweets.each do |inner|
-							
+					current_month_tweets = Array.new
+					if inner != tweet
+						inner_dt = inner.get_date_time.to_s
+						inner_arr = inner_dt.split
+						inner_month = inner_arr[inner_arr.size - 2] + inner_arr[inner_arr.size-1]
+						puts "INNER MONTH VAL"+ inner_month
+						if inner_month.strip == month.strip
+							#we have the same month
+							puts "MONTHS ARE THE SAME"
+							current_month_tweets << inner
+						end
+					end
 				end
+				#ok have gathered all the tweets for the current month
+				impact_factor_array << compute_impact_factor(current_month_tweets)
 			end
 			puts tweet.get_retweet_count
 			puts tweet.get_date_time
@@ -52,6 +70,27 @@ class TimeAggregator
 
 	def output
 
+	end
+	
+	#compute impact factor for the current month
+	def compute_impact_factor(tweets)
+		retweets = Array.new
+		tweets.each do |tweet|
+			retweets << tweet.get_retweet_count
+		end
+		retweets = retweets.sort
+		retweets = retweets.reverse
+		get_h_index(retweets)
+	end
+
+	def get_h_index(retweets)
+		i=0
+		retweets.each do |tweet|			
+			if i == tweet or i > tweet
+				return i
+			end
+			i = i + 1	
+		end
 	end
 
 end

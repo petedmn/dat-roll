@@ -13,13 +13,14 @@ class TweetLoader
 	def load_tweets
 		@tweets = Array.new
 		content = @file.read
+		xpath = "//tweet"
 		xml = Nokogiri::XML(content)
 		xml.xpath(xpath).each do |tweet|
 			tweet_id = tweet.xpath("@tweet_id").to_s			
 			retweets = tweet.xpath("./retweet_count/text()").to_s
 			favs = tweet.xpath("./favourite_count/text()").to_s
 			content = tweet.xpath("./tweet_content/text()").to_s			
-	    dt=	get_date_time(tweet_id,retweets,favs,content)
+	    dt = tweet.xpath("./date_time/text()")
 			t = Tweet.new
 			t.set_content content
 			t.set_retweet_count retweets
