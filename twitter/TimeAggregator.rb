@@ -63,7 +63,7 @@ class CommandLineInterface
 
 	def select_action
 		puts "Action?"
-		puts "Options; days\n months\n years\n time"
+		puts "Options; days\n months\n years\n time\n"
 		action = STDIN.gets.chomp
 		if action == 'days' or action == 'months' or action == 'years'or action == 'exit' or action == 'time'
 			return action

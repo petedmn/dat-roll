@@ -17,7 +17,12 @@ class TimeAnalysis
 		xml_string = @file.read
 		xml = Nokogiri::XML(xml_string)
 		xpath = ("//tweet")
+		size = xml.xpath(xpath).size
+		puts size
+		i = 0
 		xml.xpath(xpath).each do |tweet|
+			puts i.to_s << "/outof/" << size.to_s
+			i = i + 1
 			tweet_id = tweet.xpath("@tweet_id").to_s			
 			retweets = tweet.xpath("./retweet_count/text()").to_s
 			favs = tweet.xpath("./favourite_count/text()").to_s
@@ -33,10 +38,16 @@ class TimeAnalysis
 	end
 
 	def get_date_time(tweet_id,retweets,favs,content)
+		begin
 		url = "https://twitter.com/i/expanded/batch/"+tweet_id+"?facepile_max=7&include%5B%5D=social_proof&include%5B%5D=ancestors&include%5B%5D=descendants"
 		response = get_url(url)
 		tweet = Tweet.new
 		tweet.fetch_date_time(response)
+		rescue Exception => e
+			puts "exception!"
+			puts url
+			puts e
+		end
 	end
 
 	def save
