@@ -88,7 +88,7 @@ class TwitterScraper
 	#fetch page for the given url
 	#503 errors are being thrown from here currently. May be due to detection of same user agent. 
 	#If exception thrown, get a new user agent, wait a bit, then try again.
-	def fetch_page(url,fail_count=0)
+	def fetch_page(url,failed_count=0)
 			begin
 				resp = RestClient.get(url,:user_agent => @userAgent.get_user_agent.to_s)
 				return resp
