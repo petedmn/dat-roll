@@ -28,6 +28,7 @@ class TimeAnalysis
 			favs = tweet.xpath("./favourite_count/text()").to_s
 			content = tweet.xpath("./tweet_content/text()").to_s			
 	    dt=	get_date_time(tweet_id,retweets,favs,content)
+			puts dt
 			t = Tweet.new
 			t.set_content content
 			t.set_retweet_count retweets

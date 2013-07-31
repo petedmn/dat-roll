@@ -24,9 +24,19 @@ class TimeAggregator
 	
 		#load data from current month, then go back in time month by month.
 		#for each month, compute the 'impact factor' for that month.
-		#then graph that shit
+		#then compute that shit in a nice format that can be graphed, foo!
 	def cluster_months
 		@tweets.each do |tweet|
+			if tweet.get_date_time != 'UNKNOWN'
+				tweet_date_time = tweet.get_date_time.to_s
+				arr = tweet_date_time.split
+				month = arr[arr.size-2] + arr[arr.size-1]
+				puts "MONTH VAL"+month
+				#the tweets list naturally goes back in time.
+				@tweets.each do |inner|
+							
+				end
+			end
 			puts tweet.get_retweet_count
 			puts tweet.get_date_time
 		end
