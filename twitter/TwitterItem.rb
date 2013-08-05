@@ -15,6 +15,7 @@ require './String'
 
 #a Twitter Item takes a twitter page as an xml document
 #and turns it into structured, useful data.
+#a single Twitter Item corresponds to all the data relevant to ONE individual's profile.
 class TwitterItem
 
 	def initialize(content,raw,url,name,user_agent)
@@ -73,6 +74,16 @@ class TwitterItem
 	#fetch tweets, starting from the minimum ID. if no min ID given
 	#will fetch all available tweets.
 	def fetch_tweets (min_id=nil)
+		container_node_set = @content.xpath("//*[@id='stream-items-id']")
+		container_node_set.xpath("./li").each do |t|			
+			tweet = Tweet.new
+			tweet = parse_tweet_content(tweet,t)
+			@tweets << tweet			
+		end
+		return @tweets
+	end
+
+	def scrape_tweets
 		container_node_set = @content.xpath("//*[@id='stream-items-id']")
 		container_node_set.xpath("./li").each do |t|			
 			tweet = Tweet.new
@@ -167,7 +178,7 @@ class TwitterItem
 
  		container_node_set.xpath("html/body/li").each do |t|
  			tweet = Tweet.new
- 			tweet.parse_tweet_content(t)
+ 			tweet.scrape_basic_content(t)
  			@tweets << tweet
  		end		
 	  LogWriter.test("parsing extra tweets.. END")

@@ -31,14 +31,14 @@ class TwitterScraper
 
 	#first loads the base page, then continually
 	#calls twitters asyncrhonous functions in order to load past the 
-	#infinite scrolling problem
-	def scrape
+	#infinite scrolling problem.
+	def scrape_and_parse
 	begin
 		@document = fetch_base_page
 		twitterItem = TwitterItem.new(@document,@resp,@url,@name,@userAgent)
 		tweets = twitterItem.fetch_tweets	
 		@has_more = true
-		while @has_more == true and @count < 500
+		while @has_more == true
 			puts @count
 			@count = @count + 1
 			@has_more = fetch_more_tweets(twitterItem,tweets)
