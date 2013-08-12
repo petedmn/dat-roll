@@ -8,7 +8,24 @@ class Tweet
 		@tweet_content = nil
 		@retweet_count = 0
 		@favourite_count = 0
-		@date_time = nil
+		@date_time = nil		
+		@raw = nil
+	end
+
+	#scrape and parse the basic content of a tweet. store this in memory so that we can retrieve it later.
+	def scrape_basic_content(t)
+			begin
+				tweet_id = t.xpath("@data-item-id").text().to_s.strip
+				@max_tweet_id = tweet_id
+				set_id(tweet_id)
+				#puts tweet_id
+				tweet_content = t.xpath("./div/div/p/text()").to_s.strip
+				#puts tweet_content
+				set_content(tweet_content)
+			rescue Exception => e
+				LogWriter.error(e)
+				return self	
+			end
 	end
 
 
@@ -35,7 +52,10 @@ class Tweet
 	end
 	
 	#fetch the retweets and favorites for the tweet
-	def fetch_retweet_favourites(t)
+	def fetch_retweet_favourites(t=nil)
+		if t == nil
+			t = @raw
+		end
 		begin
 			#to get tweet stats, need to make another async request to twitter
 			url = "https://twitter.com/i/expanded/batch/"+get_id+"?facepile_max=7&include%5B%5D=social_proof&include%5B%5D=ancestors&include%5B%5D=descendants"
@@ -134,6 +154,41 @@ class Tweet
 
 	def get_favourite_count
 		return @favourite_count
+	end
+
+	def set_raw_content(raw_content)
+		@raw = raw_content
+	end
+
+	#getters to help format the month/date/year
+	def get_date_month_year
+		if @date_time != nil and @date_time.to_s.strip != ""
+			date_time_arr = @date_time.to_s.split
+			day_month_year = (date_time_arr[date_time_arr.size - 3] + date_time_arr[date_time_arr.size - 2] + date_time_arr[date_time_arr.size-1]).strip
+			return day_month_year
+		else
+			return "UNKNOWN"
+		end
+	end
+
+	def get_year
+		if @date_time != nil and @date_time.to_s.strip != ""
+			date_time_arr = @date_time.to_s.split
+			year = (date_time_arr[date_time_arr.size - 1]).strip
+			return year
+		else
+			return "UNKNOWN"
+		end
+	end
+
+	def get_month_year
+		if @date_time != nil and @date_time.to_s.strip != ""
+			date_time_arr = @date_time.to_s.split
+			date_month = (date_time_arr[date_time_arr.size - 2] + date_time_arr[date_time_arr.size-1]).strip
+			return date_month
+		else
+			return "UNKNOWN"
+		end
 	end
 
 end

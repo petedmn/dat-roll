@@ -22,14 +22,15 @@ class GoogleTwitterScraper
 		@google_remote_base_url = "http://www.google.com/cse?cx=004053080137224009376%3Aicdh3tsqkzy&ie=UTF-8&q="
 		load(file_name)
 		@run_file_name = run_file_name		
-		#puts "begin scraping"
 		start_scrape
 	end
 
 	def load(file_name)
 		File.open(file_name) do |f|
 			f.each_line do |line|
+				if line != nil
 				add(line)
+				end
 			end
 		end
 	end
@@ -68,16 +69,18 @@ class GoogleTwitterScraper
 			LogWriter.performance("Twitter profile;"+name+"entire scraping..BEGIN")
 			#current time..
 			start_time = Time.now
-			twitter_item = scraper.scrape
+			twitter_item = scraper.scrape_and_parse
 			end_time = Time.now
 			LogWriter.performance("Twitter profile;"+name+"scraped SUCCESFUL")
 			LogWriter.performance("Number of tweets fetched;"+twitter_item.num_fetched)
 			total_time = (end_time - start_time)
 			total_time = total_time.to_s
 			LogWriter.performance("Time taken:"+total_time)
+
+			#the design of subverting the twitter scraper does not make sense
 			
 			twitter_item.parse #make sure all mandatory fields are evaluated first
-			twitter_item.fetch_tweets
+			#twitter_item.fetch_tweets
 			twitter_item.write_to_file(name+".xml",@run_file_name)
 			#get here = sucess
 			sleep(20)
@@ -116,12 +119,31 @@ class GoogleTwitterScraper
 end
 
 class CommandLineInterface
-	def initialize
+	def initialize(file_name=nil,run_file_name=nil)
 		LogWriter.new		
 		LogWriter.info("this is a test")
+		@file_name = file_name
+		@run_file_name = run_file_name
+	end
+
+	def get_options
+		puts "any options?"
+		puts "m = multi-threaded mode"
+		puts "any other key = normal mode"
+		#options = STDIN.gets.chomp
+		#TODO - doesn't really matter at this stage.
+		interpret_options(nil)
+	end
+
+	def interpret_options(options)
+		if options == "m"
+			start(@file_name,@run_file_name,true)
+		else
+			start(@file_name,@run_file_name,false)
+		end
 	end
 		
-	def start(filename,run_dir_name)
+	def start(filename,run_dir_name,multi_threaded=false)
 		@name_list = GoogleTwitterScraper.new(filename,run_dir_name)
 	end
 
@@ -130,8 +152,7 @@ class CommandLineInterface
 	end
 end
 
-cli = CommandLineInterface.new
-cli.set_proxy
+
 
 #sanity checking
 if ARGV[0] == nil
@@ -146,12 +167,9 @@ if ARGV[1] == nil
 	exit
 end
 
-if ARGV[0]
-	filename = ARGV[0]
-	run_file_name = ARGV[1]
-puts "run file name:"+run_file_name
-   cli.start(filename,run_file_name)
-else
-   cli.start("helpers/names.txt")
-end
+file_name = ARGV[0]
+run_file_name = ARGV[1]
 
+cli = CommandLineInterface.new(file_name,run_file_name)
+cli.set_proxy
+options = cli.get_options

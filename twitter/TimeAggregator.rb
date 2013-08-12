@@ -1,6 +1,7 @@
 require 'rest-client'
 require 'nokogiri'
 require 'crack'
+require_relative './Tweet'
 require_relative './Time_Analysis'
 require_relative './XmlLoader'
 
@@ -23,76 +24,112 @@ class TimeAggregator
 	def set_proxy
 		RestClient.proxy = ENV['http_proxy']
 	end
-	
-		#load data from current month, then go back in time month by month.
-		#for each month, compute the 'impact factor' for that month.
-		#then compute that shit in a nice format that can be graphed, foo!
-		#this currently has O(n^2) complexity, would be nicer to reduce this.
+
+
+
+
 	def cluster_months
-		impact_factor_hash = Hash.new
-		overall_impact = compute_impact_factor(@tweets)
-		tweets = @tweets
-		tweets.each do |tweet|
-		tweet_date_time = tweet.get_date_time.to_s
-			if tweet_date_time != 'UNKNOWN' and tweet_date_time != nil and tweet_date_time!= ""			
-				puts tweet_date_time
-				arr = tweet_date_time.split
-				puts arr
-				month = arr[arr.size-2] + arr[arr.size-1]
-				#the tweets list naturally goes back in time.
-				current_month_tweets = Array.new
-				tweets.each do |inner|					
-					if inner != tweet
-						inner_dt = inner.get_date_time.to_s
-						inner_arr = inner_dt.split
-						if inner_arr[inner_arr.size - 2] != nil and inner_arr[inner_arr.size-1] != nil
-							inner_month = inner_arr[inner_arr.size - 2] + inner_arr[inner_arr.size-1]
-							if inner_month.strip == month.strip
-								#we have the same month								
-								current_month_tweets << inner
-							end
-						end
-					end
-				end	
-				tweets.delete(tweet)
-				#ok have gathered all the tweets for the current month
-				#puts "MONTH"+month.to_s + " IMPACT "+compute_impact_factor(current_month_tweets).to_s
-				impact_factor_hash[month] = compute_impact_factor(current_month_tweets)
-			end
+		puts "please input a file name"
+		file_name = STDIN.gets.chomp
+			if file_name == "" or file_name == nil
+			arr = @file_name.split("/")
+			str = ""
+			arr.pop
+			arr.each do |s|
+				str  << s << "/"
+			end	
+			file_name = str + "/months.xml"
 		end
-		#now do some stuff with impact factor array
-		save_month impact_factor_hash overall_impact #save the array
-	end
-
-	#save our results!
-	def save_month(impact_factor_hash,overall_impact)
-		puts "Please input a file name which can be saved to"
-		file_name = STDIN.gets
-
 		file = File.open(file_name,"w")
+		overall_impact = compute_impact_factor(@tweets)
+		tweet_hash = @tweets.group_by{|t| t.get_month_year}		
 		builder = Nokogiri::XML::Builder.new do |xml|
 			xml.month_divide{
-			xml.overall_impact_ overall_impact
-			xml.months{
-			impact_factor_hash.each do |month,impact_factor|				
-					xml.month_ month
-					xml.impact_ impact_factor				
-			end
-		}
-	}
+				xml.overall_impact_ overall_impact
+				xml.months{
+					tweet_hash.each do |key,tweet|
+					date_time = tweet[0].get_month_year
+					impact_month = compute_impact_factor(tweet)
+						xml.month{
+							xml.m_ date_time
+							xml.impact_factor_ impact_month
+						}	
+					end
+				}
+			}		
 		end
 		file.write(builder.to_xml)
 		file.close		
 	end
 
-	def cluster_days
-		puts "STUB"
+		def cluster_days
+		puts "please input a file name"
+		file_name = STDIN.gets.chomp
+		if file_name == "" or file_name == nil
+			arr = @file_name.split("/")
+			str = ""
+			arr.pop
+			arr.each do |s|
+				str  << s << "/"
+			end
+			file_name = str + "days.xml"
+		end
+		file = File.open(file_name,"w")
+		overall_impact = compute_impact_factor(@tweets)
+		tweet_hash = @tweets.group_by{|t| t.get_date_month_year}		
+		builder = Nokogiri::XML::Builder.new do |xml|
+			xml.day_divide{
+				xml.overall_impact_ overall_impact
+				xml.days{
+					tweet_hash.each do |key,tweet|
+					date_time = tweet[0].get_date_month_year
+					impact_month = compute_impact_factor(tweet)
+						xml.day{
+							xml.d_ date_time
+							xml.impact_factor_ impact_month
+						}	
+					end
+				}
+			}		
+		end
+		file.write(builder.to_xml)
+		file.close		
 	end
 
 	def cluster_years
-		puts "STUB"
+		puts "please input a file name"
+		file_name = STDIN.gets.chomp
+			if file_name == "" or file_name == nil
+			arr = @file_name.split("/")
+			str = ""
+			arr.pop
+			arr.each do |s|
+				str  << s << "/"
+			end
+			file_name = str + "/years.xml"
+		end
+		file = File.open(file_name,"w")
+		overall_impact = compute_impact_factor(@tweets)
+		tweet_hash = @tweets.group_by{|t| t.get_year}		
+		builder = Nokogiri::XML::Builder.new do |xml|
+			xml.year_divide{
+				xml.overall_impact_ overall_impact
+				xml.years{
+					tweet_hash.each do |key,tweet|
+					date_time = tweet[0].get_year
+					impact_month = compute_impact_factor(tweet)
+						xml.year{
+							xml.y_ date_time
+							xml.impact_factor_ impact_month
+						}	
+					end
+				}
+			}		
+		end
+		file.write(builder.to_xml)
+		file.close		
 	end
-
+	
 	def output
 		puts "STUB"
 	end
@@ -105,7 +142,9 @@ class TimeAggregator
 		end
 		retweets = retweets.sort
 		retweets = retweets.reverse
-		return get_h_index(retweets)
+		h_index = get_h_index(retweets)
+		puts "H_INDEX"+ h_index.to_s
+		return h_index
 	end
 
 	def get_h_index(retweets)
@@ -128,7 +167,7 @@ class CommandLineInterface
 				file_name = ARGV[0]
 			else
 				puts "File Name?"
-				file_name = gets
+				file_name = gets.chomp
 			end
 			@analysis = TimeAnalysis.new(file_name)
 			@time_aggregator = TimeAggregator.new(file_name)
@@ -140,6 +179,7 @@ class CommandLineInterface
 		puts "Action?"
 		puts "Options; days\n months\n years\n time\n"
 		action = STDIN.gets.chomp
+		puts "performing #{action}"
 		if action == 'days' or action == 'months' or action == 'years'or action == 'exit' or action == 'time'
 			return action
 		else
@@ -164,7 +204,7 @@ class CommandLineInterface
 			exit 1
 		end
 		puts "done"
-		select_action
+		process(select_action)
 	end
 
 	def get_file_name

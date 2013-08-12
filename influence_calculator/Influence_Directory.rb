@@ -54,6 +54,7 @@ class TwitterInfluence
 		#the h-index is the point at which the number of papers = the number of citations... 		
 		if @results_file_name != nil
 			save_xml_results(@results_file_name,h_index.to_s,num_followers.to_s,@name.to_s,num_tweets,retweets.size.to_s)
+			save_results(h_index.to_s,num_followers.to_s,@name.to_s,num_tweets,retweets.size.to_s)
 		end
 	end
 

@@ -36,14 +36,16 @@ class TwitterScraper
 	begin
 		@document = fetch_base_page
 		twitterItem = TwitterItem.new(@document,@resp,@url,@name,@userAgent)
-		tweets = twitterItem.fetch_tweets	
+		tweets = twitterItem.fetch_base_tweets	
 		@has_more = true
 		while @has_more == true
 			puts @count
 			@count = @count + 1
-			@has_more = fetch_more_tweets(twitterItem,tweets)
-			sleep(5) #we should wait between requests or else shit gets bad	
+			@has_more = fetch_more_tweets(twitterItem) # if this fails, it will exit....
+			#sleep(5) #we should wait between requests or else shit gets bad	
 		end	
+		#now that we have all the tweets; parse them!
+		#twitterItem.parse_individual_tweets
 	rescue Exception => e
 		LogWriter.error(e)
 		twitterItem.write_to_file(@name,"fails")
@@ -55,7 +57,7 @@ class TwitterScraper
 	#fetch more tweets will load more tweets based on the 
 	#given twitter item, and its tweet set. Returns true if there are more tweets to
 	#fetch
-	def fetch_more_tweets(twitterItem,tweets)
+	def fetch_more_tweets(twitterItem)
 		LogWriter.test("Time taken to fetch extra tweets...START")
 		###
 		#make the async request to get more data

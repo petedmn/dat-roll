@@ -11,6 +11,9 @@ require './Tweet'
 require './UserAgent'
 require './RequestHandler'
 require './String'
+require './TweetFetcher'
+require 'thread'
+require 'work_queue'
 
 
 #a Twitter Item takes a twitter page as an xml document
@@ -30,69 +33,6 @@ class TwitterItem
 		@user_agent = user_agent
 	end
 
-	#method to automatically evaluate the various fields e.g. num tweets, following,followers
-	def parse
-		get_num_tweets
-		get_num_following
-		get_num_followers
-	end
-
-	def get_num_tweets
-		if @number_of_tweets == nil then
-			number_of_tweets_node_set = @content.xpath("(//*[@data-element-term='tweet_stats'])[1]")
-			node = number_of_tweets_node_set.first
-			@number_of_tweets = node.inner_text()
-			return @number_of_tweets
-		else
-			return @number_of_tweets
-		end
-	end
-
-	def get_num_following
-		if @number_following == nil then
-			number_following_node_set = @content.xpath("(//*[@data-element-term='following_stats'])[1]")
- 			node = number_following_node_set.first
- 			@number_following = node.inner_text()
- 			return @number_following
-		else
-			return @number_following
-		end
-
-	end
-
-	def get_num_followers
-		if@number_followers == nil then
-			number_of_followers_node_set = @content.xpath("(//*[@data-element-term='follower_stats'])[1]")
- 			node = number_of_followers_node_set.first
- 			@number_followers = node.inner_text()
- 			return @number_followers
-		else
-			return @number_followers
-		end
-	end
-
-	#fetch tweets, starting from the minimum ID. if no min ID given
-	#will fetch all available tweets.
-	def fetch_tweets (min_id=nil)
-		container_node_set = @content.xpath("//*[@id='stream-items-id']")
-		container_node_set.xpath("./li").each do |t|			
-			tweet = Tweet.new
-			tweet = parse_tweet_content(tweet,t)
-			@tweets << tweet			
-		end
-		return @tweets
-	end
-
-	def scrape_tweets
-		container_node_set = @content.xpath("//*[@id='stream-items-id']")
-		container_node_set.xpath("./li").each do |t|			
-			tweet = Tweet.new
-			tweet = parse_tweet_content(tweet,t)
-			@tweets << tweet			
-		end
-		return @tweets
-	end
-
 	#parse the content of a tweet and container node t, saving this to the given
 	#tweet object
 	def parse_tweet_content (tweet, t)
@@ -106,12 +46,11 @@ class TwitterItem
 		tweet_content = t.xpath("./div/div/p/text()").to_s.strip
 		#puts tweet_content
 		tweet.set_content(tweet_content)
-
-		#fetching retweets and favourites gets complicated
-		tweet = fetch_retweet_favourites(tweet,t)	
+		tweet.set_raw_content(t)
 
 	rescue Exception => e
-		logger.info(e)
+		LogWriter.error(e)
+		throw e
 	end
 		end_time = Time.now
 		time_taken = (end_time - start_time).to_s
@@ -119,48 +58,6 @@ class TwitterItem
 		LogWriter.parse_performance("Time taken to parse tweet;"+time_taken)
 		return tweet
 	end	
-
-	def fetch_retweet_favourites(tweet, t)
-		begin
-			tweet.fetch_retweet_favourites(t)
-			return tweet
-			###BELOW CODE IS NO LONGER USED
-			puts "FETCHING RETWEETS, WRONG PLACE"
-			#sleep(4)#as I do not want to get blocked
-			var = "//*[@id='stream-item-tweet="+tweet.get_id+"']/ol/li[1]/div/div/div[3]/div/div[4]/ul/li[1]/a/strong/text()"
-			retweet_count = t.xpath(var)
-			#puts retweet_count
-			#to get tweet stats, need to make another async request to twitter
-			url = "https://twitter.com/i/expanded/batch/"+tweet.get_id+"?facepile_max=7&include%5B%5D=social_proof&include%5B%5D=ancestors&include%5B%5D=descendants"
-			request = RequestHandler.new(url,@user_agent)
-			response = request.make_request
-
-			#find retweets
-			retweets = response.string_between_markers(" Retweeted ", " times")
-			tweet.set_retweet_count(retweets.strip)
-			#puts "retweeted:"+retweets
-			#find favourites
-			favourites = response.string_between_markers(" Favorited ", " times")
-			#puts "favourited:" + favourites
-			tweet.set_favourite_count(favourites.strip)
-
-				#date_time
-			date_time_val = response.string_between_markers("tweet-timestamp","\\u003E").strip
-			puts "DATE TIME VAL;"+date_time_val
-			date_time_val = date_time_val.chomp("\\")
-			tweet.set_date_time(date_time_val)
-							
-
-			file = File.open("lol.html","w")
-			file.write(response)
-			file.close
-			###END CODE NO LONGER USED
-	rescue Exception => e
-	
-		puts e
-		throw e
-	end
-	end
 
 	#tweet parser for the JSON response for infinite scrolling.
 	#add these tweets to the tweet array for the page we are parsing
@@ -175,14 +72,38 @@ class TwitterItem
 		content_to_parse = json["items_html"]
 
  		container_node_set = Nokogiri::HTML(content_to_parse)	
+ 		#Multi-Threading! 
+ 		wq = WorkQueue.new 15,20
+ 		puts "BEGIN... FETCH TWEETS AND DATA"
 
+ 		tweet_set = Array.new
  		container_node_set.xpath("html/body/li").each do |t|
+ 			wq.enqueue_b do
  			tweet = Tweet.new
- 			tweet.scrape_basic_content(t)
+ 			tweet.parse_tweet_content(t)
+ 			#tweet.set_raw_content(t)
  			@tweets << tweet
+ 			end			
  		end		
+ 		wq.join
+ 		wq.kill #kill threads 
+ 		puts "END FETCH ALL TWEETS"
+ 		#we have a number of tweets that can then be parsed by out
+ 		#thread pool...
+
+
 	  LogWriter.test("parsing extra tweets.. END")
 		return @has_more
+	end
+
+	def parse_tweet(tweet)
+		tweet.parse_tweet_content
+	end
+
+	#do the fetching and saving of the tweet data itself. 
+	def parse_individual_tweets
+		tweet_fetcher = TweetFetcher.new(@tweets)
+		tweet_fetcher.fetch_all_content
 	end
 
 	def max_tweet_id
@@ -258,4 +179,73 @@ class TwitterItem
 		return @tweets.size.to_s
 	end
 
+		#method to automatically evaluate the various fields e.g. num tweets, following,followers
+	def parse
+		get_num_tweets
+		get_num_following
+		get_num_followers
+	end
+
+	def get_num_tweets
+		if @number_of_tweets == nil then
+			number_of_tweets_node_set = @content.xpath("(//*[@data-element-term='tweet_stats'])[1]")
+			node = number_of_tweets_node_set.first
+			@number_of_tweets = node.inner_text()
+			return @number_of_tweets
+		else
+			return @number_of_tweets
+		end
+	end
+
+	def get_num_following
+		if @number_following == nil then
+			number_following_node_set = @content.xpath("(//*[@data-element-term='following_stats'])[1]")
+ 			node = number_following_node_set.first
+ 			@number_following = node.inner_text()
+ 			return @number_following
+		else
+			return @number_following
+		end
+
+	end
+
+	def get_num_followers
+		if@number_followers == nil then
+			number_of_followers_node_set = @content.xpath("(//*[@data-element-term='follower_stats'])[1]")
+ 			node = number_of_followers_node_set.first
+ 			@number_followers = node.inner_text()
+ 			return @number_followers
+		else
+			return @number_followers
+		end
+	end
+
+	#fetch the tweets from the first page. This does not assist with infinite scrolling.
+	def fetch_base_tweets (min_id=nil)
+		container_node_set = @content.xpath("//*[@id='stream-items-id']")
+		container_node_set.xpath("./li").each do |t|			
+			tweet = Tweet.new
+			tweet = parse_tweet_content(tweet,t)
+			@tweets << tweet			
+		end
+		return @tweets
+	end
+
+end
+
+
+module Enumerable
+  def in_parallel_n(n)
+    todo = Queue.new
+    ts = (1..n).map{
+      Thread.new{
+        while x = todo.deq
+          Exception.ignoring_exceptions{ yield(x[0]) } 
+        end
+      }
+    }
+    each{|x| todo << [x]}
+    n.times{ todo << nil }
+    ts.each{|t| t.join}
+  end
 end

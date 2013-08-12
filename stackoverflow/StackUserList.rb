@@ -10,13 +10,14 @@ class StackUserList
 		@user_agent = UserAgent.new
 	end
 	
-	#loop through all users, starting from those on the home page
+	#loop through all users, starting from those on the home page......
 	def scrape_all
 		page = fetch_page(@base_url)
 		url_list = get_url_list(page)
 		url_list.each do |url|
 			#scrape the page
-			user = User.new(url)
+			user = User.new(url,@user_agent)
+			user.scrape
 		end
 	end
 

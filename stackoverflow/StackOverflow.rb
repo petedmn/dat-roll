@@ -21,12 +21,23 @@ class StackOverFlow
 	end
 end
 
-
-
-
 class CommandLineInterface
 	def initialize
 		set_proxy
+		get_instruction
+	end
+
+	#get an instruction!
+	def get_instruction
+		puts "Please input an instruction"
+		puts "1 = scrape user list"
+		input = STDIN.gets
+		if input == "1"
+			scrape_user_list
+		else
+			puts "input:"+input+" is not a valid option. Please try again."
+			get_instruction
+		end
 	end
 
 	def scrape_user_list
@@ -40,4 +51,3 @@ class CommandLineInterface
 end
 
 cli = CommandLineInterface.new
-cli.scrape_user_list
