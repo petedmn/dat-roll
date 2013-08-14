@@ -1,0 +1,1 @@
+grep -A2 Time performance.log
