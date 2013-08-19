@@ -3,6 +3,7 @@ require "nokogiri"
 require "uri"
 require "logger"
 require './UserAgent'
+require './Profile'
 
 #provides functionality to search for profiles, based on first/last names,
 #using the linked in search mechanism
@@ -16,13 +17,13 @@ class LinkedInSearch
 	end
 
 	def search_through_names
-		nf = File.open(name_file)
+		nf = File.open(@name_file)
 		nf.each_line do |line|
 			if line != nil
 				url_to_search = construct_search_url(line.chomp)
-				url_list_to_scrape = get_profile_url_list#could parrelize at this level.
-				url_list_to_scrape.each do |profile_url|
-					scrape_profile(profile_url)
+				url_list_to_scrape = get_profile_url_list(url_to_search)
+				url_list_to_scrape.each do |profile_url|#could parrelize at this level.
+					scrape_profile(profile_url.to_s)
 				end	
 			end
 		end
@@ -42,25 +43,28 @@ class LinkedInSearch
 			base_url << "first=#{first}"
 		end
 		if last != nil 
-			base_url << "&last=#{last}"
+			base_url<<"&last=#{last}"
 		else
-			base_url << "&last=Search"
+			base_url<< "&last=Search"
 		end
-		base_url << "&search=Search&searchType=fps"
+		base_url<< "&search=Search&searchType=fps"
 		puts "url... #{base_url}"
-		return base_url
+		return base_url.to_s
 	end
 
 	#loads the list of names, returns a list of URLs that
 	#can be used to view profiles.
-	def get_profile_url_list
+	def get_profile_url_list(url)
+		url_list = Array.new
 		#first, load the page..
-		resp = RestClient.get(@base_url,:user_agent => @user_agent.get_user_agent.to_s)
-		doc = Nokogiri::HTML(@resp)
-		xpath = '//*[@id="result-set"]/ol'
+		resp = RestClient.get(url,:user_agent => @user_agent.get_user_agent.to_s)
+		doc = Nokogiri::HTML(resp)
+		xpath = '//*[@id="result-set"]/li'
 		doc.xpath(xpath).each do |li|
-			puts li
+			href = li.xpath('./h2/strong/a/@href')
+			url_list << href
 		end
+		return url_list
 	end
 
 end
@@ -68,8 +72,12 @@ end
 class CommandLineInterface
 	def initialize(name_file,results_dir)
 		$logger = Logger.new('logger.log')
-		@name_list = LinkedInSearch.new(name_file,results_dir)
+		@search = LinkedInSearch.new(name_file,results_dir)
 	end	
+
+	def execute
+		@search.search_through_names
+	end
 end
 
 if ARGV[0] == nil
@@ -80,3 +88,4 @@ name_file = ARGV[0]
 results_dir = '/vol/projects/kris/OpenRep/Iain/linkedin/results'
 
 cli = CommandLineInterface.new(name_file,results_dir)
+cli.execute
