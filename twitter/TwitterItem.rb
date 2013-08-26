@@ -31,6 +31,7 @@ class TwitterItem
 		@number_following = nil
 		@number_followers = nil
 		@user_agent = user_agent
+		@real_name = nil
 	end
 
 	#parse the content of a tweet and container node t, saving this to the given
@@ -62,6 +63,9 @@ class TwitterItem
 	#tweet parser for the JSON response for infinite scrolling.
 	#add these tweets to the tweet array for the page we are parsing
 	def	fetch_extra_tweets(json)
+		begin
+		#put the brakes on. Wait 10 seconds between requests.
+		sleep(10)
 		LogWriter.test("parsing extra tweets.. START")
 		#we have a hash of values to deal with....
 		#puts "parsing the extra tweets"	
@@ -74,26 +78,34 @@ class TwitterItem
  		container_node_set = Nokogiri::HTML(content_to_parse)	
  		#Multi-Threading! 
  		wq = WorkQueue.new 15,20
- 		puts "BEGIN... FETCH TWEETS AND DATA"
 
  		tweet_set = Array.new
  		container_node_set.xpath("html/body/li").each do |t|
+ 			begin
  			wq.enqueue_b do
- 			tweet = Tweet.new
+ 			tweet = Tweet.new(@name,get_real_name)
  			tweet.parse_tweet_content(t)
  			#tweet.set_raw_content(t)
- 			@tweets << tweet
- 			end			
+ 			if(tweet.is_of_page_owner == true)
+ 				@tweets << tweet
+ 			end
+ 			end		
+ 			rescue Exception => e
+ 				puts "Exception in thread...#{wb}, #{e}"#throw away exceptions in sub threads.
+ 			end	
  		end		
  		wq.join
  		wq.kill #kill threads 
- 		puts "END FETCH ALL TWEETS"
  		#we have a number of tweets that can then be parsed by out
  		#thread pool...
 
 
 	  LogWriter.test("parsing extra tweets.. END")
 		return @has_more
+	rescue Exception => e
+		puts "fatal exception parsing set of tweets.."
+		LogWriter.error("FATAL EXCEPTION #{e}")
+	end
 	end
 
 	def parse_tweet(tweet)
@@ -184,6 +196,16 @@ class TwitterItem
 		get_num_tweets
 		get_num_following
 		get_num_followers
+	end
+
+	def get_real_name
+		if @real_name == nil then
+			node_set = @content.xpath('//*[@id="page-container"]/div[2]/div[1]/div[2]/h1/span/text()')
+			@real_name = node_set.to_s
+			return @real_name
+		else
+			return @real_name
+		end
 	end
 
 	def get_num_tweets

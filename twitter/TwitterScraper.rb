@@ -99,8 +99,8 @@ class TwitterScraper
 					throw e
 				end
 				#exception thrown trying to fetch the resource... Try again with a different user agent.
+					puts "retry....#{failed_count}"
 					@userAgent = UserAgent.new
-					sleeps(20) #token gesture - wait a little bit, see if the issue is solved.
 					fetch_page(url,failed_count + 1)
 			end
 	end

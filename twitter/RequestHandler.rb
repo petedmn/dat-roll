@@ -1,7 +1,7 @@
 require './UserAgent'
 
 class RequestHandler
-	def initialize(url, user_agent)
+	def initialize(url, user_agent=nil)
 		@url = url
 		@user_agent = user_agent
 	end
