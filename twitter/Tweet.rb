@@ -153,7 +153,7 @@ class Tweet
 			if date_time_val != nil and date_time_val.to_s != ""
 				set_date_time(date_time_val)					
 				LogWriter.debug("date_time:"+date_time_val)	
-				return date_time_val
+				set_date_time(date_time_val)
 			else			
 				LogWriter.debug("date_time: UNKNOWN")
 				return "UNKNOWN"
