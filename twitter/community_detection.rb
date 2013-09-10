@@ -23,10 +23,11 @@ class Crawler
 		page = search_page(@agent,@profile_name)
 		
 		#load base_followers
-		base_followers(@agent,@profile_name)
+		follower_names = base_followers(@agent,@profile_name) #this will take a while for Cmdr_Hadfield!
 
 		#load base_following
-		base_following(@agent,@profile_name)
+		following_names = base_following(@agent,@profile_name)
+
 	end
 
 	#search for a page with the given profile name
@@ -74,12 +75,12 @@ class Crawler
 		#ok we have all of the profiles available at this base level. Now, need to deal with inifinite scroll.		
 		#the data cursor is a value that is necessary when dealing with 
 		data_cursor_xpath = '//*[@id="timeline"]/div[2]/@data-cursor'
-		data_cursor = doc.xpath(data_cursor_xpath).to_s
-		puts "data cursor #{data_cursor}"
+		@data_cursor = doc.xpath(data_cursor_xpath).to_s
+		puts "data cursor #{@data_cursor}"
 		
 		has_more = true
 		until has_more == false do
-			has_more = parse_extra_followers(data_cursor,profile_name,follower_names,auth_token)
+			has_more = parse_extra_followers(@data_cursor,profile_name,follower_names,auth_token)
 		end		
 
 		return follower_names	
@@ -89,27 +90,95 @@ class Crawler
 	def parse_extra_followers(data_cursor_val,profile_name,follower_names,auth_token)
 		#the URI... Magic, really. If this changes, all must change accordingly! We worship this URI! (pls don't change this, Twitter.)
 		uri = "https://twitter.com/#{profile_name}/followers/users?cursor=#{data_cursor_val}&include_available_features=1&include_entities=1&is_forward=true"
+		puts uri
 		response = RestClient.get(uri,
 									{:cookies => {:auth_token => auth_token.to_s,:secure_session => "true"}})
 
 		json = JSON.parse(response)
-		file = File.open('auth_page.html','w')
-		file.write(json)
-		file.close
-		#puts JSON.parse(response)
-	#	https://twitter.com/Cmdr_Hadfield/followers/users?cursor=1347834627953995830&include_available_features=1&include_entities=1&is_forward=true
 
-		return false
+		@data_cursor = json["cursor"]
+
+		has_more = json["has_more_items"]
+
+		items_html = json["items_html"]
+
+		doc = Nokogiri::HTML(items_html)
+
+		doc.xpath('/html/body/li').each do |node|
+			name_xpath = './div/div[2]/div/a/@href'
+			name = node.xpath(name_xpath).to_s.gsub("/","")
+			follower_names << name			 
+		end		
+
+		return has_more
 	end
 
 	#return a list of the profiles of everyone who this person is following.
 	def base_following(agent,profile_name)
 		following_names = Array.new
 		following_page = agent.click(agent.page.link_with(:href => "/#{profile_name}/following"))
-		following_page.links.each do |link|
+		
+		#Need to use RestClient in order to do some manual manipulation of cookies etc.
+		auth_token = nil		
+		agent.cookies.each do |val|
+			if(val.to_s.start_with? 'auth_token') then
+				auth_token = val.to_s.gsub("auth_token=", "")
+			end
+		end			
 
-		end
+		response = RestClient.get(following_page.uri.to_s,
+									{:cookies => {:auth_token => auth_token.to_s,:secure_session => "true"}})
+		#now loop over some rest-client requests, at each step parsing the response.		
+
+				#so parse the profiles which are available at the base level.
+		doc = Nokogiri::HTML(response)
+		profiles_xpath = '//*[@id="stream-items-id"]/li'
+		doc.xpath(profiles_xpath).each do |node|
+			name_xpath = './div/div[2]/div/a/@href'
+			#remove the '/' character
+			name = node.xpath(name_xpath).to_s.gsub("/","")
+			following_names << name		
+		end		
+
+		#ok we have all of the profiles available at this base level. Now, need to deal with inifinite scroll.		
+		#the data cursor is a value that is necessary when dealing with 
+		data_cursor_xpath = '//*[@id="timeline"]/div[2]/@data-cursor'
+		@data_cursor = doc.xpath(data_cursor_xpath).to_s
+		puts "data cursor #{@data_cursor}"
+		
+		has_more = true
+		until has_more == false do
+			has_more = parse_extra_following(@data_cursor,profile_name,following_names,auth_token)
+		end			
 		return following_names
+	end
+
+	#helper method for the following case. Very similar to followers, could possibly refactor this into a single method.
+	def parse_extra_following(data_cursor_val,profile_name,following_names,auth_token)
+		#the URI... Magic, really. If this changes, all must change accordingly! We worship this URI! (pls don't change this, Twitter.)
+		uri = "https://twitter.com/#{profile_name}/following/users?cursor=#{data_cursor_val}&include_available_features=1&include_entities=1&is_forward=true"
+		puts uri
+		response = RestClient.get(uri,
+									{:cookies => {:auth_token => auth_token.to_s,:secure_session => "true"}})
+
+		json = JSON.parse(response)
+
+		@data_cursor = json["cursor"]
+
+		has_more = json["has_more_items"]
+		puts has_more
+
+		items_html = json["items_html"]
+
+		doc = Nokogiri::HTML(items_html)
+
+		doc.xpath('/html/body/li').each do |node|
+			name_xpath = './div/div[2]/div/a/@href'
+			name = node.xpath(name_xpath).to_s.gsub("/","")
+			following_names << name			 
+		end		
+
+		return has_more
 	end
 
 end
