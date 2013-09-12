@@ -13,6 +13,7 @@ class Tweet
 		@is_of_page_owner = false
 		@name=name
 		@real_name = real_name
+		@retweeter_list = nil
 	end
 
 	#scrape and parse the basic content of a tweet. store this in memory so that we can retrieve it later.
@@ -65,6 +66,10 @@ class Tweet
 		return self
 	end
 	end
+
+	def parse_retweets (t)
+
+	end
 	
 	# #fetch the retweets and favorites for the tweet
 	# def fetch_retweet_favourites(t=nil)
@@ -114,7 +119,9 @@ class Tweet
 		
 		begin
 			#to get tweet stats, need to make another async request to twitter
-			url = "https://twitter.com/Cmdr_Hadfield/status/"+get_id
+			url = "https://twitter.com/#{@name}/status/"+get_id
+			#puts url
+			#url = "https://twitter.com/Cmdr_Hadfield/status/"+get_id
 			#url = "https://twitter.com/i/expanded/batch/"+get_id+"?facepile_max=7&include%5B%5D=social_proof&include%5B%5D=ancestors&include%5B%5D=descendants"
 			LogWriter.debug(url)
 
@@ -135,7 +142,8 @@ class Tweet
 			else
 				LogWriter.debug("retweets: UNKNOWN")
 				set_retweet_count("0")
-			end					
+			end
+			@retweeter_list = fetch_retweeter_list(doc)			
 			
 			#favourites = response.string_between_markers(" Favorited ", " times")
 			favourites = doc.xpath('//*[@id="page-container"]/div[1]/div[1]/div/div[3]/div[2]/div[4]/ul/li[2]/a/strong/text()').to_s
@@ -162,6 +170,17 @@ class Tweet
 		puts "exception parsing tweet #{e}"
 		LogWriter.error(e)
 	end
+	end
+
+	def fetch_retweeter_list(doc)		
+		retweeter_list = Array.new
+		xpath = '//*[@id="stream-items-id"]/li'
+		doc.xpath(xpath).each do |retweeter|
+			name_xpath = './div/div/div[1]/a/span[2]/b/text()'
+			name = retweeter.xpath(name_xpath)		
+			retweeter_list << name
+		end
+		return retweeter_list
 	end
 
 	#fetch the date and time values for the tweet
@@ -269,6 +288,12 @@ class Tweet
 		else
 			return "UNKNOWN"
 		end
+	end
+
+	#list of twitter usernames who have retweeted this Tweet object.
+	#It may not be possible to gather a full list of users who retweeted this tweet.
+	def get_retweeter_list
+		return @retweeter_list
 	end
 
 	def set_name name
