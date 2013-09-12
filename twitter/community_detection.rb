@@ -12,22 +12,118 @@ class Crawler
 	def initialize(profile_name,agent)
 		@profile_name = profile_name
 		@agent = agent
+		#remember to set the RestClient proxy
+		set_proxy
 	end	 
 
 	#we need to loop through profiles, and gather follower/following details for these profiles
 	#this is kind of the main method for our crawler.
 
 	#then, we can go through tweets and look at who is retweeting these. 
-	def execute(num_profiles=0) #might start using number of profiles as an argument later;not needed at this point.
+	def execute(num_profiles=0,current_level=0) #might start using number of profiles as an argument later;not needed at this point.	
+
 		#first, load the base profile.
 		page = search_page(@agent,@profile_name)
-		
-		#load base_followers
-		follower_names = base_followers(@agent,@profile_name) #this will take a while for Cmdr_Hadfield!
 
 		#load base_following
 		following_names = base_following(@agent,@profile_name)
+		
+		#go back..
+		@agent.back
 
+		#load base_followers
+		follower_names = base_followers(@agent,@profile_name) #this will take a while for Cmdr_Hadfield!		
+
+		#save these.
+		save(follower_names,following_names,@profile_name)
+
+		#keep going! Lol not yet.
+		#By the way this is naturally recursive. 
+		unless following_names == nil then
+			following_names.each do |name|
+				scrape_profile(name,1)
+			end
+		end
+
+		unless follower_names == nil then
+			follower_names.each do |name|
+				scrape_profile(name,1)
+			end
+		end
+
+	 end
+
+
+	def scrape_profile(name,depth=1,max=1)
+		#go back, first off.
+		@agent.back
+
+		#first load base profile
+		page = search_page(@agent,name)
+
+		#load following
+		following_names = base_following(@agent,name)
+
+		@agent.back
+
+		#load followers
+		follower_names = base_followers(@agent,name)
+
+		#save this profile
+		save(follower_names,following_names,name)
+
+		#keep being recursive!
+		unless depth >= max then
+			unless following_names == nil then
+				following_names.each do |name|
+					scrape_profile(name,depth+1,max)
+				end
+			end
+
+			unless follower_names == nil then
+				follower_names.each do |name|
+					scrape_profile(name,depth+1,max)
+				end
+			end
+		end
+
+	end
+
+
+	#set proxy for the uni environment.
+	def set_proxy
+		RestClient.proxy = ENV['http_proxy']
+	end
+
+	#take two arrays of follower names and following names
+	def save(follower_names, following_names,profile_name)
+		#currently just save to a txt file, this will be changed to database integration at a later date.
+			builder = Nokogiri::XML::Builder.new do |xml|
+				xml.profile{
+					xml.name_ profile_name
+						xml.followers{
+							unless follower_names == nil then
+								follower_names.each do |follower|
+									xml.follower_name_ follower
+								end
+							end
+						}
+						xml.following{					
+						unless following_names == nil then
+							following_names.each do |following|
+								xml.following_name_ following
+							end
+						end
+					}
+				}
+			end
+			#save to VOL in order to manage my own disk usage.
+			xml_str = builder.to_xml
+
+			base_directory = '/vol/projects/kris/OpenRep/Iain/results/community_follower_dataset/'
+			file = File.open("#{base_directory}#{profile_name}.xml",'w')
+			file.write(xml_str)
+			file.close
 	end
 
 	#search for a page with the given profile name
@@ -251,7 +347,12 @@ end
 auth = Authenticate.new('engr489@gmail.com','smokey12#')
 auth.authenticate
 
+#first command line argument is the file which stores profile names
+unless ARGV[0] == nil then
+	file_name = ARGV[0]
+end
+
 #then begin the algorithm..
 #current implementation is highly dependant on the username being EXACTLY correct. Therefore pages which I've already fetched are prime candidates.
-crawler = Crawler.new('Cmdr_Hadfield',auth.get_agent)
+crawler = Crawler.new('k_j_gorman',auth.get_agent)
 crawler.execute #add arguments for number of pages to scrape, potentially.
