@@ -163,6 +163,15 @@ class TwitterItem
         				xml.tweet_content_  t.get_content
         				xml.retweet_count_     t.get_retweet_count
         				xml.favourite_count_ t.get_favourite_count
+        				xml.retweet_names{
+	        				retweet_names = t.get_retweeter_list
+	        				unless retweet_names == nil then
+	        				retweet_names.each do |name|
+	        					xml.name_ name
+	        				end
+	        			end
+        				}
+        			
 					xml.date_time_ t.get_date_time
         		}	
         		end
