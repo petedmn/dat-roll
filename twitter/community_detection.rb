@@ -154,8 +154,12 @@ class Crawler
 			end
 		end			
 
-		response = RestClient.get(followers_page.uri.to_s,
-									{:cookies => {:auth_token => auth_token.to_s,:secure_session => "true"}})
+		#do the request.
+
+		response = request(followers_page.uri.to_s,auth_token.to_s,0)
+
+		# response = RestClient.get(followers_page.uri.to_s,
+		# 							{:cookies => {:auth_token => auth_token.to_s,:secure_session => "true"}})
 		#now loop over some rest-client requests, at each step parsing the response.
 
 		#so parse the profiles which are available at the base level.
@@ -182,13 +186,30 @@ class Crawler
 		return follower_names	
 	end
 
+	#handle the request, along with a retry counter.
+	#this is better as a seperate method, since the same code is written in multiple places.
+	#also since it is in a seperate method we can better handle failure.
+	def request(url,auth_token,retry_count,max_retries=3)
+		begin
+			response = RestClient.get(url,
+										{:cookies => {:auth_token => auth_token.to_s,:secure_session => "true"}})	
+			return response
+		rescue Exception => e
+			response = request(url,auth_token,retry_count+1,max_retries)
+			return response
+		end
+	end
+
 	#helper method to parse the extra followers, from a given json response from twitter.
 	def parse_extra_followers(data_cursor_val,profile_name,follower_names,auth_token)
 		#the URI... Magic, really. If this changes, all must change accordingly! We worship this URI! (pls don't change this, Twitter.)
 		uri = "https://twitter.com/#{profile_name}/followers/users?cursor=#{data_cursor_val}&include_available_features=1&include_entities=1&is_forward=true"
 		puts uri
-		response = RestClient.get(uri,
-									{:cookies => {:auth_token => auth_token.to_s,:secure_session => "true"}})
+
+		response = request(uri,auth_token.to_s,0)
+
+		# response = RestClient.get(uri,
+		# 							{:cookies => {:auth_token => auth_token.to_s,:secure_session => "true"}})
 
 		json = JSON.parse(response)
 
@@ -222,8 +243,10 @@ class Crawler
 			end
 		end			
 
-		response = RestClient.get(following_page.uri.to_s,
-									{:cookies => {:auth_token => auth_token.to_s,:secure_session => "true"}})
+		# response = RestClient.get(following_page.uri.to_s,
+		# 							{:cookies => {:auth_token => auth_token.to_s,:secure_session => "true"}})
+
+		response = request(following_page.uri.to_s,auth_token.to_s,0)
 		#now loop over some rest-client requests, at each step parsing the response.		
 
 				#so parse the profiles which are available at the base level.
@@ -254,8 +277,10 @@ class Crawler
 		#the URI... Magic, really. If this changes, all must change accordingly! We worship this URI! (pls don't change this, Twitter.)
 		uri = "https://twitter.com/#{profile_name}/following/users?cursor=#{data_cursor_val}&include_available_features=1&include_entities=1&is_forward=true"
 		puts uri
-		response = RestClient.get(uri,
-									{:cookies => {:auth_token => auth_token.to_s,:secure_session => "true"}})
+		response = request(uri,auth_token.to_s,0)
+
+		# response = RestClient.get(uri,
+		# 							{:cookies => {:auth_token => auth_token.to_s,:secure_session => "true"}})
 
 		json = JSON.parse(response)
 
