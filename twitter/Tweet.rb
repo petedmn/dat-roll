@@ -69,48 +69,7 @@ class Tweet
 
 	def parse_retweets (t)
 
-	end
-	
-	# #fetch the retweets and favorites for the tweet
-	# def fetch_retweet_favourites(t=nil)
-	# 	if t == nil
-	# 		t = @raw
-	# 	end
-	# 	begin
-	# 		#to get tweet stats, need to make another async request to twitter
-	# 		url = "https://twitter.com/i/expanded/batch/"+get_id+"?facepile_max=7&include%5B%5D=social_proof&include%5B%5D=ancestors&include%5B%5D=descendants"
-	# 		LogWriter.debug(url)
-	# 		request = RequestHandler.new(url,@user_agent)
-	# 		response = request.make_request
-	# 		LogWriter.debug("\n\n====================")
-
-	# 		retweets = response.string_between_markers(" Retweeted ", " times")
-	# 		if retweets != nil
-	# 			LogWriter.debug("retweets:"+retweets)
-	# 			set_retweet_count(retweets.strip)
-	# 		else
-	# 			LogWriter.debug("retweets: UNKNOWN")
-	# 			set_retweet_count("0")
-	# 		end					
-			
-	# 		favourites = response.string_between_markers(" Favorited ", " times")
-
-	# 		if favourites != nil
-	# 			LogWriter.debug("favourites:"+favourites)
-	# 			set_favourite_count(favourites.strip)
-	# 		else
-	# 			LogWriter.debug("favourites: UNKNOWN")
-	# 			set_favourite_count("0")
-	# 		end		
-
-	# 		#get the date time values
-	# 		fetch_date_time(response)
-		
-	# rescue Exception => e
-	# 	#puts e
-	# 	LogWriter.error(e)
-	# end
-	# end
+	end	
 
 	def fetch_retweet_favourites(t=nil)
 		if t == nil

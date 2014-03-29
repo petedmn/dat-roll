@@ -11,7 +11,6 @@ require './Tweet'
 require './UserAgent'
 require './RequestHandler'
 require './String'
-require './TweetFetcher'
 require 'thread'
 require 'work_queue'
 
@@ -38,7 +37,6 @@ class TwitterItem
 	#tweet object
 	def parse_tweet_content (tweet, t)
 		start_time = Time.now
-		LogWriter.debug("Parsing tweet.. START")
 		begin
 		tweet_id = t.xpath("@data-item-id").text().to_s.strip
 		@max_tweet_id = tweet_id
@@ -50,13 +48,8 @@ class TwitterItem
 		tweet.set_raw_content(t)
 
 	rescue Exception => e
-		LogWriter.error(e)
 		throw e
-	end
-		end_time = Time.now
-		time_taken = (end_time - start_time).to_s
-		LogWriter.debug("Parsing tweet.. END SUCCESFUL")
-		LogWriter.parse_performance("Time taken to parse tweet;"+time_taken)
+	end	
 		return tweet
 	end	
 
@@ -66,7 +59,6 @@ class TwitterItem
 		begin
 		#put the brakes on. Wait 10 seconds between requests.
 		sleep(10)
-		LogWriter.test("parsing extra tweets.. START")
 		#we have a hash of values to deal with....
 		#puts "parsing the extra tweets"	
 		#puts json["max_id"]
@@ -100,11 +92,9 @@ class TwitterItem
  		#thread pool...
 
 
-	  LogWriter.test("parsing extra tweets.. END")
 		return @has_more
 	rescue Exception => e
 		puts "fatal exception parsing set of tweets.."
-		LogWriter.error("FATAL EXCEPTION #{e}")
 	end
 	end
 
@@ -130,7 +120,6 @@ class TwitterItem
 	#write the current twitter item to a file! (writes the whole thing at present! Should move to changed-based)
 	#TODO moved to change based file storage, might be slower overall though?
 	def write_to_file(file_name, directory_name)
-		LogWriter.debug("START write to file...")
 		start_time = Time.now
 		begin
 			Dir::mkdir(directory_name)
@@ -143,8 +132,7 @@ class TwitterItem
 		file.close		
 		end_time = Time.now
 		time_taken = (end_time - start_time).to_s
-		LogWriter.debug("Write to file finished SUCCESFUL")
-		LogWriter.storage_performance("Time taken;"+time_taken)
+
 	end	
 
 	def construct_xml
