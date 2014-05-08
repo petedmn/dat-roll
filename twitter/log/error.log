@@ -1,0 +1,10 @@
+E, [2014-05-08T18:27:04.992773 #11776] ERROR -- : undefined local variable or method `json' for #<TwitterScraper:0x00000003eff058> (NameError)
+/home/pete/dat-roll/twitter/TwitterScraper.rb:76:in `fetch_more_tweets'
+/home/pete/dat-roll/twitter/TwitterScraper.rb:44:in `scrape_and_parse'
+Twitter.rb:43:in `block in scrape_url_list'
+Twitter.rb:38:in `each'
+Twitter.rb:38:in `scrape_url_list'
+Twitter.rb:32:in `block in scrape_name_list'
+Twitter.rb:29:in `each'
+Twitter.rb:29:in `scrape_name_list'
+Twitter.rb:108:in `<main>'

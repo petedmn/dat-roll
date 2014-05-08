@@ -27,7 +27,7 @@ class Twitter
 
 	def scrape_name_list
 		@name_list.each do |name|
-			name = truncate_name(name)
+			#name = truncate_name(name)
 			url_list = @google_scraper.fetch_twitter_url_list(name)
 			scrape_url_list(url_list)
 		end
@@ -46,6 +46,7 @@ class Twitter
 			
 			twitter_item.parse #make sure all mandatory fields are evaluated first
 			#twitter_item.fetch_tweets
+			@run_file_name = "dataNow"
 			twitter_item.write_to_file(name+".xml",@run_file_name)
 			#get here = sucess
 			sleep(20)

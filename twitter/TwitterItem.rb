@@ -60,6 +60,7 @@ class TwitterItem
 		#put the brakes on. Wait 10 seconds between requests.
 		sleep(10)
 		#we have a hash of values to deal with....
+		LogWriter.test("parsing the extra tweets")
 		#puts "parsing the extra tweets"	
 		#puts json["max_id"]
 		@max_tweet_id = json["max_id"]
@@ -69,6 +70,7 @@ class TwitterItem
 
  		container_node_set = Nokogiri::HTML(content_to_parse)	
  		#Multi-Threading! 
+ 		LogWriter.test("Multi-Threading")
  		wq = WorkQueue.new 15,20
 
  		tweet_set = Array.new
@@ -91,7 +93,7 @@ class TwitterItem
  		#we have a number of tweets that can then be parsed by out
  		#thread pool...
 
-
+LogWriter.test("end return Multi-Threading")
 		return @has_more
 	rescue Exception => e
 		puts "fatal exception parsing set of tweets.."
@@ -120,6 +122,8 @@ class TwitterItem
 	#write the current twitter item to a file! (writes the whole thing at present! Should move to changed-based)
 	#TODO moved to change based file storage, might be slower overall though?
 	def write_to_file(file_name, directory_name)
+		LogWriter.test("FileName====")
+
 		start_time = Time.now
 		begin
 			Dir::mkdir(directory_name)

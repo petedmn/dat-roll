@@ -1,0 +1,50 @@
+D, [2014-05-08T18:28:46.031097 #11784] DEBUG -- : Time taken to fetch extra tweets...START
+D, [2014-05-08T18:28:47.240512 #11784] DEBUG -- : Time taken to fetch extra tweets...END
+D, [2014-05-08T18:28:57.243854 #11784] DEBUG -- : parsing the extra tweets
+D, [2014-05-08T18:28:57.244582 #11784] DEBUG -- : Multi-Threading
+D, [2014-05-08T18:28:57.248552 #11784] DEBUG -- : end return Multi-Threading
+D, [2014-05-08T18:29:23.547156 #11788] DEBUG -- : Time taken to fetch extra tweets...START
+D, [2014-05-08T18:29:24.760307 #11788] DEBUG -- : Time taken to fetch extra tweets...END
+D, [2014-05-08T18:29:34.763663 #11788] DEBUG -- : parsing the extra tweets
+D, [2014-05-08T18:29:34.764356 #11788] DEBUG -- : Multi-Threading
+D, [2014-05-08T18:29:34.768295 #11788] DEBUG -- : end return Multi-Threading
+D, [2014-05-08T18:31:25.137531 #11795] DEBUG -- : Time taken to fetch extra tweets...START
+D, [2014-05-08T18:31:26.341632 #11795] DEBUG -- : Time taken to fetch extra tweets...END
+D, [2014-05-08T18:31:36.344910 #11795] DEBUG -- : parsing the extra tweets
+D, [2014-05-08T18:31:36.345578 #11795] DEBUG -- : Multi-Threading
+D, [2014-05-08T18:31:36.349458 #11795] DEBUG -- : end return Multi-Threading
+D, [2014-05-08T18:33:02.453808 #11802] DEBUG -- : Time taken to fetch extra tweets...START
+D, [2014-05-08T18:33:03.655126 #11802] DEBUG -- : Time taken to fetch extra tweets...END
+D, [2014-05-08T18:33:13.658401 #11802] DEBUG -- : parsing the extra tweets
+D, [2014-05-08T18:33:13.659065 #11802] DEBUG -- : Multi-Threading
+D, [2014-05-08T18:33:13.662991 #11802] DEBUG -- : end return Multi-Threading
+D, [2014-05-08T18:39:16.569173 #11809] DEBUG -- : Time taken to fetch extra tweets...START
+D, [2014-05-08T18:39:17.774995 #11809] DEBUG -- : Time taken to fetch extra tweets...END
+D, [2014-05-08T18:39:27.778348 #11809] DEBUG -- : parsing the extra tweets
+D, [2014-05-08T18:39:27.779115 #11809] DEBUG -- : Multi-Threading
+D, [2014-05-08T18:39:27.783111 #11809] DEBUG -- : end return Multi-Threading
+D, [2014-05-08T18:39:27.791730 #11809] DEBUG -- : FileName====
+D, [2014-05-08T18:40:14.765990 #11814] DEBUG -- : Time taken to fetch extra tweets...START
+D, [2014-05-08T18:40:15.967197 #11814] DEBUG -- : Time taken to fetch extra tweets...END
+D, [2014-05-08T18:40:25.970471 #11814] DEBUG -- : parsing the extra tweets
+D, [2014-05-08T18:40:25.971138 #11814] DEBUG -- : Multi-Threading
+D, [2014-05-08T18:40:25.975028 #11814] DEBUG -- : end return Multi-Threading
+D, [2014-05-08T18:40:25.983667 #11814] DEBUG -- : FileName====
+D, [2014-05-08T18:40:41.709799 #11817] DEBUG -- : Time taken to fetch extra tweets...START
+D, [2014-05-08T18:40:42.792108 #11817] DEBUG -- : Time taken to fetch extra tweets...END
+D, [2014-05-08T18:40:52.795469 #11817] DEBUG -- : parsing the extra tweets
+D, [2014-05-08T18:40:52.796135 #11817] DEBUG -- : Multi-Threading
+D, [2014-05-08T18:40:52.800011 #11817] DEBUG -- : end return Multi-Threading
+D, [2014-05-08T18:40:52.807408 #11817] DEBUG -- : FileName====
+D, [2014-05-08T18:41:52.175747 #11821] DEBUG -- : Time taken to fetch extra tweets...START
+D, [2014-05-08T18:41:53.386576 #11821] DEBUG -- : Time taken to fetch extra tweets...END
+D, [2014-05-08T18:42:03.389881 #11821] DEBUG -- : parsing the extra tweets
+D, [2014-05-08T18:42:03.390583 #11821] DEBUG -- : Multi-Threading
+D, [2014-05-08T18:42:03.394545 #11821] DEBUG -- : end return Multi-Threading
+D, [2014-05-08T18:42:03.403004 #11821] DEBUG -- : FileName====
+D, [2014-05-08T18:46:13.257810 #11835] DEBUG -- : Time taken to fetch extra tweets...START
+D, [2014-05-08T18:46:14.458663 #11835] DEBUG -- : Time taken to fetch extra tweets...END
+D, [2014-05-08T18:46:24.461909 #11835] DEBUG -- : parsing the extra tweets
+D, [2014-05-08T18:46:24.462614 #11835] DEBUG -- : Multi-Threading
+D, [2014-05-08T18:46:24.466495 #11835] DEBUG -- : end return Multi-Threading
+D, [2014-05-08T18:46:24.475000 #11835] DEBUG -- : FileName====
